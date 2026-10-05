@@ -56,6 +56,8 @@
 - [ ] **P2.E5.T2** — Star/rank rating per mission (time, damage taken, accuracy) driving replay incentives
 - [ ] **P2.E5.T3** — If DG-1 = B: run-replay seeding (seed shown, same spawns) — otherwise mark N/A with note
 
+**Phase 2 DoD:** all boxes above `[x]`, exit criteria satisfied, M2 content census matches `docs/essential/`.
+
 
 ---
 

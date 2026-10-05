@@ -1,6 +1,6 @@
 # Phase 10 — Post-Launch, Live Operations & End-of-Life
 
-**Goal:** protect launch momentum: fast fixes, community trust, measured content updates, and a clear end-state — sustaining "players come back constantly" (retention pillars: runs + unlocks + challenges).
+**Goal:** protect launch momentum: fast fixes, community trust, measured content updates, and a clear end-state — sustaining "players come back constantly" (retention pillars: missions + unlocks + challenges).
 **Depends on:** M5 shipped · telemetry & support channels live.
 **Effort:** ongoing (budget 1 person for 8–12 weeks post-launch) · **Cadence-based, not milestone-based**
 
@@ -22,7 +22,7 @@
 - [ ] **P10.E2.T1** — Support inbox + Discord staffed daily (launch month): response SLA <24 h business days; FAQ/knowledge base seeded (known issues, save recovery, settings tips)
 - [ ] **P10.E2.T2** — Feedback loops: Steam discussions + Discord channels triaged weekly into backlog labels (`postlaunch`, area tags); monthly "you asked, we fixed" post
 - [ ] **P10.E2.T3** — Mod-friendliness assessment: tuning SOs + localization tables already data-driven — decide expose-folder policy (loose files) and document what's supported vs unsupported
-- [ ] **P10.E2.T4** — Community milestones: thank-you trailer at 100k wishlists/10k sales; wishlist/sale announcements coordinated with P9 cadence
+- [ ] **P10.E2.T4** — Community milestones: thank-you trailer at 10k wishlists / 10k sales; wishlist/sale announcements coordinated with P9 cadence
 
 ## Epic P10.E3 — Content updates & monetization sustain (~4–8 pw per update)
 
@@ -44,6 +44,8 @@
 - [ ] **P10.E5.T2** — Preservation: final build archived (depot + zipped artifact + symbols), repo tagged `eol/1.x`, docs snapshot, save-format freeze documented
 - [ ] **P10.E5.T3** — Postmortem v2 (business): what worked vs roadmap estimates (calibration for next project), archived in `docs/postmortems/`
 - [ ] **P10.E5.T4** — Optional sequel/DLC green-light memo using retention + review data (go/no-go documented)
+
+**Phase 10 DoD:** 90-day exit criteria all checked; monthly dashboard + quarterly re-plan cadence established.
 
 ---
 

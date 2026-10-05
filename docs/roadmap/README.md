@@ -1,6 +1,6 @@
 # Master Development Roadmap — [Working Title] Neo Cyber Shooter
 
-**Status: DRAFT v1.0 — awaiting review; implementation starts only after approval.**
+**Status: REVIEWED v1.1 — full QA review passed ([review report](../review-report.md)); implementation starts only after owner approval.**
 Baseline: verified codebase docs in [`docs/essential/`](../essential/index.md) · Unity `6000.3.20f1` · commit `c9d5f0e` · branch `develop`.
 
 ---
@@ -40,7 +40,7 @@ Baseline: verified codebase docs in [`docs/essential/`](../essential/index.md) �
 
 ### Explicit assumptions (flag anything wrong at review)
 - **A1** Windows PC → Steam, price **$14.99–$19.99**, regional pricing on, no microtransactions; DLC optional post-launch.
-- **A2** Small team (solo–5) + contractors; effort shown as **person-weeks**; milestones M0–M7 are *relative* — map to calendar yourself.
+- **A2** Small team (solo–5) + contractors; effort shown as **person-weeks**; milestones M0–M6 are *relative* — map to calendar yourself.
 - **A3** Structure: **mission-based action + meta-progression** (DG-1 can still switch to roguelite/horde).
 - **A4** Existing free-tier audio/sprites are **provisional**; provenance audit in P0, remediation before paid marketing (P8).
 - **A5** Keep URP 17 + 2D physics; upgrade `Animation` selectively (DG-4), no full Mecanim rewrite by default.
@@ -82,31 +82,31 @@ Baseline: verified codebase docs in [`docs/essential/`](../essential/index.md) �
 | Milestone | Scope | Exit gate | Target |
 |---|---|---|---|
 | **M0 — Foundation green** | P0 complete | CI green, zero warnings, ledger exists, smoke passes | Month 1–2 |
-| **M1 — Combat vertical slice** | P1.E1–E4 + minimal HUD/pause (thin slices of P3) + placeholder audio swap plan | one mission vs 6 archetypes feels good (≥5 testers rate feel ≥4/5) | Month 3–5 |
-| **M2 — Content-complete alpha** | P2 complete + P3 core + P4 core | full loop new-profile → finish; save works | Month 6–9 |
-| **M3 — Feature complete beta** | P4–P6 complete | perf budgets met; accessibility set complete; Deck played | Month 10–12 |
+| **M1 — Combat vertical slice** | P1.E1–E4 + slice build (P1.E9) + minimal HUD/pause (thin slices of P3) + placeholder audio swap plan | one mission vs 6 archetypes feels good (≥5 testers rate feel ≥4/5) | Month 3–5 |
+| **M2 — Content-complete alpha** | P1.E5–E8 (arsenal, abilities, bosses, baseline balance) + P2 complete + P3 core + P4 core | full loop new-profile → finish; save works | Month 6–9 |
+| **M3 — Feature complete beta** | P3 final + P4–P6 complete | perf budgets met; accessibility set complete; Deck played | Month 10–12 |
 | **M4 — Release candidate** | P7 + P8 gates | RC cert checklist all green; store approved | Month 13–14 |
 | **M5 — Launch** | P9 | 1.0 shipped, day-1 ops live | Month 15 |
 | **M6 — Season 1** | P10 first content update + hotfix cadence | metrics reviewed, top post-launch bugs closed | Month 16–18 |
 
-*Float: ~1 month built in after M3. If slipping >6 weeks: cut P2.E3.T5 (challenges), P1.E4.T7 (elites), P5.E5 (UI juice) — in that order (descope list).*
+*Float: ~1 month built in after M3. If slipping >6 weeks: cut P2.E3.T5 (challenges), P1.E4.T7 (elites), P5.E4.T5 (UI juice) — in that order (descope list).*
 
 ## 4. Global progress tracker
 
 | Phase | File | Effort (pw) | Depends on | Status |
 |---|---|---|---|---|
-| P0 Foundation | [phase-00](phase-00-foundation.md) | 14–18 | — | 0% `- [ ]` |
-| P1 Combat | [phase-01](phase-01-core-combat.md) | 26–34 | P0.E4 | 0% |
-| P2 Progression | [phase-02](phase-02-progression-content.md) | 24–30 | DG-1, P1.E1–E3 | 0% |
+| P0 Foundation | [phase-00](phase-00-foundation.md) | 14–18 | — | 0% |
+| P1 Combat | [phase-01](phase-01-core-combat.md) | 26–34 | P0.E3, P0.E4 | 0% |
+| P2 Progression | [phase-02](phase-02-progression-content.md) | 24–30 | DG-1, P1.E1–E3, P0.E4.T6 | 0% |
 | P3 UI/UX | [phase-03](phase-03-ui-ux.md) | 18–24 | P0.E4.T5, DG-2 | 0% |
-| P4 Audio | [phase-04](phase-04-audio.md) | 8–12 | P1 events | 0% |
-| P5 Feel & visuals | [phase-05](phase-05-juice-visual.md) | 12–16 | P1, DG-4 | 0% |
+| P4 Audio | [phase-04](phase-04-audio.md) | 8–12 | P1, P0.E8 | 0% |
+| P5 Feel & visuals | [phase-05](phase-05-juice-visual.md) | 12–16 | P1, DG-4, P0.E4.T6 | 0% |
 | P6 Technical quality | [phase-06](phase-06-technical-quality.md) | 10–14 | P0, DG-3 | 0% |
 | P7 QA | [phase-07](phase-07-qa-testing.md) | 12–16 | rolling, gate M4 | 0% |
 | P8 Platform & compliance | [phase-08](phase-08-platform-business.md) | 8–12 | P0.E8, M2 | 0% |
 | P9 Marketing & launch | [phase-09](phase-09-marketing-launch.md) | 8–12 | P8 store | 0% |
 | P10 Post-launch | [phase-10](phase-10-post-launch.md) | ongoing | M5 | 0% |
-| **Total** | | **~140–180 pw** | | **0%** |
+| **Total** | | **~140–190 pw** | | **0%** |
 
 ## 5. Cross-cutting engineering standards
 
@@ -139,5 +139,5 @@ Baseline: verified codebase docs in [`docs/essential/`](../essential/index.md) �
 1. [Phase 0 — Foundation](phase-00-foundation.md) · 2. [Phase 1 — Combat](phase-01-core-combat.md) · 3. [Phase 2 — Progression & content](phase-02-progression-content.md) · 4. [Phase 3 — UI/UX](phase-03-ui-ux.md) · 5. [Phase 4 — Audio](phase-04-audio.md) · 6. [Phase 5 — Feel & visuals](phase-05-juice-visual.md) · 7. [Phase 6 — Technical quality](phase-06-technical-quality.md) · 8. [Phase 7 — QA](phase-07-qa-testing.md) · 9. [Phase 8 — Platform & compliance](phase-08-platform-business.md) · 10. [Phase 9 — Marketing & launch](phase-09-marketing-launch.md) · 11. [Phase 10 — Post-launch](phase-10-post-launch.md)
 
 ---
-*Change log of this roadmap: v1.0 initial draft (awaiting review).*
+*Change log: v1.0 initial draft → **v1.1 first full QA review** — structure, cross-references, milestone coverage and code-fact verification fixes (all findings closed; see [review report](../review-report.md)).*
 

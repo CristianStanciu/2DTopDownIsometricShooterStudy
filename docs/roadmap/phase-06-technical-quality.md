@@ -41,6 +41,7 @@
 - [ ] **P6.E4.T3** — Logging & error policy: release builds log to file (rotating 5 MB) + Unity `LogException` hook captured to `crash-*.txt` in persistentDataPath (support artifact); user-facing fatal-error dialog with log path
 - [ ] **P6.E4.T4** — Opt-in telemetry client (events: boot, session_end, level_result, crash, settings_change — **no PII**), consent gate + settings toggle, offline queue; legal text reviewed in P8
   - [ ] Privacy review checklist: events documented in `docs/legal/telemetry-events.md`, default OFF
+- [ ] **P6.E4.T5** — Windows code signing: obtain a code-signing certificate; `signtool` step in `build.yml` signs the shipped exe; SmartScreen/AV behavior verified on a clean Windows 10/11 machine (ADR if deliberately deferred — README §2 launch config requires "build signed")
 
 ## Epic P6.E5 — Platform matrix (~2 pw)
 

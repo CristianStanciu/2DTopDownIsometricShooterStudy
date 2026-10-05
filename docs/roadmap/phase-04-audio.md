@@ -13,7 +13,7 @@
 
 ## Epic P4.E1 — Audio architecture & mixer (~2 pw)
 
-- [ ] **P4.E1.T1** — Audio Mixer graph: buses Music/SFX/Ambience/UI + subgroups (weapons, enemies, player), exposed params `MasterVolume`, `MusicVolume`, `SFXVolume` hooked to settings (P3.E4) via `SoundManager` API; snapshots: Gameplay / Paused (duck music) / Menu
+- [ ] **P4.E1.T1** — Audio Mixer graph: buses Music/SFX/Ambience/UI/Voice (Voice reserved until narration exists) + subgroups (weapons, enemies, player), exposed params `MasterVolume`, `MusicVolume`, `SFXVolume` hooked to settings (P3.E4) via `SoundManager` API; snapshots: Gameplay / Paused (duck music) / Menu
   - [ ] Test: volume sliders move exposed params; pause ducks within 100 ms and restores once (single-fire assertion)
 - [ ] **P4.E1.T2** — Extend `SoundManager` per defect P0.E3.T3 + replace per-clip `AudioSource` creation with pooled emitters (align with P6 pooling)
 - [ ] **P4.E1.T3** — Audio catalogue asset: every clip registered with id, bus, priority, volume trim, pitch range, cooldown (prevents stacking machine-gun overlap); SFX API takes ids, not raw clips

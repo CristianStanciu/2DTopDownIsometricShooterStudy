@@ -2,7 +2,7 @@
 
 **Goal:** make it a *game*: player can be hurt and die, enemies exist with distinct behaviors, weapons feel like an arsenal, encounters are challenging and tunable.
 **Depends on:** P0.E4 (scene context/tuning SOs) recommended first; P0.E3 defects fixed.
-**Effort:** ~26–34 person-weeks · **Milestone:** M1 (vertical slice) → M4 (balance done)
+**Effort:** ~26–34 person-weeks · **Milestone:** M1 (vertical slice: E1–E4 + E9) → M2 (E5–E8 complete)
 **Design north-star:** pillar 1 (feel) + pillar 3 (arsenal depth). Every task below feeds both.
 
 ## Exit criteria
@@ -17,7 +17,7 @@
 - [ ] **P1.E1.T1** — `Health` component (max/current, invulnerability window, shields, regen hooks, death event via `UnityEvent`/C# event); works on player and enemies
   - [ ] Unit tests: damage clamp, i-frame immunity, death fires exactly once, heal caps at max
 - [ ] **P1.E1.T2** — `DamageInfo` struct (amount, source, type, direction, crit, hit point) + `IDamageable` interface; all projectiles/melee route through one `DealDamage` entry point
-- [ ] **P1.E1.T3** — Faction/teams on layers: reuse Physics2D layers 8 (`Player`) / 9 (`Bullet`) from `project-settings.md`; add `Enemy` layer + collision matrix update (projectile vs enemy, enemy vs player, no friendly fire)
+- [ ] **P1.E1.T3** — Faction/teams on layers: reuse Physics2D layers 8 (`Player`) / 9 (`Projectile`) from `project-settings.md`; add `Enemy` layer + collision matrix update (projectile vs enemy, enemy vs player, no friendly fire)
   - [ ] Collision matrix screenshot + matrix test for every projectile/enemy/player pair
 - [ ] **P1.E1.T4** — Hit resolution pipeline: projectile `OnTriggerEnter2D` → faction check → `IDamageable` → events (`OnDamaged`, `OnKilled`) consumed by VFX (P5), audio (P4), score (P2), camera shake (P5)
 - [ ] **P1.E1.T5** — Damage numbers & hit feedback hook (data only; visuals in P5, UI in P3)

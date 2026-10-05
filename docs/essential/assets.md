@@ -59,7 +59,7 @@ Weapons/LaserRifle_Auto-Charge/LaserRifle_Auto-Charge_Energy.mat
 
 Plus `Assets/Physics Materials/NoFriction.physicsMaterial2D` (used by player/projectile bodies).
 
-## Prefabs (`Assets/Prefabs/`) — 17 total
+## Prefabs (`Assets/Prefabs/`) — 18 total
 
 ```
 Environment/Ground/pfab_Tiles_A.prefab                       (currently unused in scenes)

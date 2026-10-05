@@ -27,7 +27,7 @@
 - [ ] **P8.E2.T2** — Capsule set (main 616×353, small 462×174, header 616×353, 230×87 logo, 1232×706 hero): brief to artist/asset pipeline; readability tested at thumbnail size
 - [ ] **P8.E2.T3** — Trailer: ≤60 s (gameplay-first 0–15 s), captures from P7.E4 evidence builds at 1440p60; captions + end card (price, wishlist CTA)
 - [ ] **P8.E2.T4** — Screenshot set (8–10): every biome, boss, HUD visible, one accessibility-menu shot, one Deck shot; localized variants if needed
-- [ ] **P8.E2.T5** — Steam review & setup: age gates (if violence rating requires), pricing incl. regional matrix + launch discount (10–20%), release-date set ≥2 weeks out, categories/tags (Action, Top-Down, Cyberpunk, Roguelite-if-applicable), review embargo plan for keys (P9)
+- [ ] **P8.E2.T5** — Steam review & setup: age gates (if violence rating requires), pricing incl. regional matrix + launch discount (10–20%, recommended 10% — align with P9.E5.T3), release-date set ≥2 weeks out, categories/tags (Action, Top-Down, Cyberpunk, Roguelite-if-applicable), review embargo plan for keys (P9)
 - [ ] **P8.E2.T6** — Demo decision & build (if P9 wants Next Fest — recommended): content slice from P1.E9.T1 + first biome mission, separate appid, feedback survey link
 
 ## Epic P8.E3 — Legal & compliance (~2 pw)

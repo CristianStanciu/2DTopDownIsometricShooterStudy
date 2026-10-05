@@ -28,7 +28,7 @@
 
 - [ ] **P0.E2.T1** — Re-serialize `SingleWall_Test.unity` in 6000.3.20f1 (upgrade commit `c9d5f0e` never touched it) and commit
   - [ ] Script-component census after save matches `docs/essential/scenes.md` (no missing scripts / lost `m_Script` GUIDs)
-- [ ] **P0.E2.T2** — Replace all 13 obsolete `FindObjectOfType` sites with `FindFirstObjectByType`/`FindAnyObjectByType`: `SoundManager.cs:37,43,49`, `CrosshairHandler.cs:26,27`, `CrosshairJoystick.cs:55,56`, `CrosshairMouse.cs:36`, `AfterImageGenerator.cs:36`, `AfterImageGroup.cs:14`, `PlayerBodyPartsHandler.cs:50`, `PlayerSkills.cs:20`, `Singleton.cs:33`, `JustNotes.cs:14`
+- [ ] **P0.E2.T2** — Replace all 13 obsolete `FindObjectOfType` call sites (in 9 scripts) with `FindFirstObjectByType`/`FindAnyObjectByType`: `SoundManager.cs:37,43,49`, `CrosshairHandler.cs:26,27`, `CrosshairJoystick.cs:55,56`, `CrosshairMouse.cs:36`, `AfterImageGenerator.cs:36`, `AfterImageGroup.cs:14`, `PlayerBodyPartsHandler.cs:50`, `PlayerSkills.cs:20`, `Singleton.cs:33`; also drop the stale comment mention in `JustNotes.cs:14`
   - [ ] Zero CS0618/obsolete warnings in console & CI log
 - [ ] **P0.E2.T3** — Null-guard unguarded lookups (`CrosshairMouse`/`CrosshairJoystick` → `FindAnyObjectByType<PlayerController>()?.transform`) — closes defect P0.E3.T9
 - [ ] **P0.E2.T4** — **Warning-zero policy**: catalogue every warning class; fix or suppress-with-reason; CI fails on new `Warning CS|error CS` lines

@@ -69,6 +69,7 @@
 - [ ] **P3.E7.T2** — Motion: screen-shake off/scale (P3.E4.T3), full-screen flash reduction (post-process + shader flag), camera FOV/kick scale, reduce-motion UI transitions
 - [ ] **P3.E7.T3** — Difficulty assists menu: damage-taken scaling, auto-aim magnetism slider (new: aim assist on controller — feeds `TadaInput` aim), slow-motion helper, invulnerability (flag disables achievements via P8)
 - [ ] **P3.E7.T4** — Accessibility audit vs shipping checklist (industry baseline); report in `docs/qa/a11y.md`; **DoD for phase requires this green**
+- [ ] **P3.E7.T5** — Captions & subtitles: sound-cue captions toggle for critical gameplay cues (low-HP, objective updates, hazard warnings) + subtitle rendering for any spoken/narrative audio; if the final audio ships voice-free, close this task with a documented N/A note (README §2 requires subtitles usable end-to-end)
 
 **Phase 3 DoD:** exit criteria checked; navigation audit (P3.E5.T3) + pseudo-loc CI gate green.
 
