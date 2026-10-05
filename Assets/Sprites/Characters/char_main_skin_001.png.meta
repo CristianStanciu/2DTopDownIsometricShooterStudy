@@ -60,7 +60,7 @@ TextureImporter:
       213: 6410556715607256145
     second: Hips
   externalObjects: {}
-  serializedVersion: 11
+  serializedVersion: 12
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -80,6 +80,8 @@ TextureImporter:
   isReadable: 0
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -89,8 +91,8 @@ TextureImporter:
   textureSettings:
     serializedVersion: 2
     filterMode: 0
-    aniso: -1
-    mipBias: -100
+    aniso: 1
+    mipBias: 0
     wrapU: 1
     wrapV: 1
     wrapW: 1
@@ -111,10 +113,14 @@ TextureImporter:
   textureType: 8
   textureShape: 1
   singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  ignorePngGamma: 0
   applyGammaDecoding: 0
+  cookieLightType: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -579,6 +585,25 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      Calf_L: -4767077875519243275
+      Calf_R: 4487770151356650576
+      ForeArm_L: -5376762516017629467
+      ForeArm_R: -8526789749135792402
+      Hand_L: 262797768175272805
+      Hand_R: -483578750328476101
+      Head: -2064690921117727531
+      Hips: 6410556715607256145
+      Neck_BG: 8964005852270161696
+      Neck_Decal: 1820985825349864295
+      Shadow: 683266542051834943
+      Shoulder_L: 8338566346687922264
+      Shoulder_R: 1262169934571257000
+      Thigh_L: -4698041866631695681
+      Thigh_R: 8968582544998406026
+      Torso: 5245983755355312981
+      UpperArm_L: 3100863930187566975
+      UpperArm_R: -5986128545762320538
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

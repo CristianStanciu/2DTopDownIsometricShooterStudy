@@ -27,7 +27,7 @@ public class Physics2DHandler : MonoBehaviour
     /// <summary>
     /// Rigidbody2D velocity.
     /// </summary>
-    public Vector2 Velocity { get { return _RigidBody.velocity; } private set { _RigidBody.velocity = value; } } 
+    public Vector2 Velocity { get { return _RigidBody.linearVelocity; } private set { _RigidBody.linearVelocity = value; } } 
 
     public virtual void SetVelocity(Vector2 newVelocity)
     {
