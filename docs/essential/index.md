@@ -44,6 +44,8 @@ codebase as it exists on the `develop` branch after the Unity 6.3 upgrade
 ### Engineering status
 14. [Known Issues & Roadmap Foundation](known-issues-and-roadmap.md) — Unity 6 upgrade artifacts, deprecated API usage, latent bugs, and candidate backlog themes.
 
+**→ [Master Development Roadmap](../roadmap/README.md)** (outside this directory) — the full phase-by-phase development plan derived from these docs: epics, tasks with `- [ ]` status tracking, acceptance criteria, dependencies, effort estimates and release gates.
+
 ---
 
 ## How to use these docs
