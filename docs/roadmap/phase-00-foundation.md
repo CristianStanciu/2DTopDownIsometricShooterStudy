@@ -37,7 +37,8 @@
 - [x] **P0.E2.T4** — **Warning-zero policy**: catalogue every warning class; fix or suppress-with-reason; CI fails on new `Warning CS|error CS` lines *(policy + 7-class catalogue: `docs/qa/warning-policy.md` — 0 `warning CS`/`error CS` across all batchmode runs of 6000.3.20f1, CS0618 eliminated in E2.T2, Unity `/nowarn:0169,0649,0282,1701,1702` scaffold accepted with reasons, 0 game warnings + 1 editor-internal WARN classified in MT-SMOKE-01; fail-gate implemented as the "Warning gate" step of `ci.yml` — first enforced run pending repo secrets, see P0.E6.T1)*
 - [x] **P0.E2.T5** — Refresh `README.md`: correct engine `6000.3.20f1`, upgrade story (2019.4 → 6000.3), link to `docs/essential/`, controls table
 - [~] **P0.E2.T6** — **Play-mode validation** on a clean checkout: run manual case `MT-SMOKE-01` (boot → Level_00 → move/dash/shoot/weapon-swap → pause → quit); record in `docs/qa/smoke.md` *(automated subset GREEN 2026-10-06 on fresh clone @`74b6552`: PASS=13 / FAIL=0 / WARN=1 editor-internal, exit 0 — full record in `docs/qa/smoke.md`; pending manual: gamepad, audio, wall-façade observation, interactive quit)*
-- [ ] **P0.E2.T7** — Confirm deterministic package restore from committed `packages-lock.json`; CI uses locked mode
+- [~] **P0.E2.T7** — Confirm deterministic package restore from committed `packages-lock.json`; CI uses locked mode
+  - *Lock committed + LF-pinned; a full fresh-clone import (B.14 smoke runs, 2026-10-06) left it byte-identical (blob `7d10942`); `ci.yml` gained a restore gate failing on any `packages-lock.json` drift. Pending: first CI run (blocked with `gh auth login`).*
 
 ## Epic P0.E3 — Defect burn-down (14 verified defects, ~3 pw)
 

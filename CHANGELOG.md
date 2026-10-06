@@ -32,6 +32,8 @@ Every merged PR adds an entry under `[Unreleased]` (rule: `CONTRIBUTING.md`).
   (optional `version` override) → game-ci `StandaloneWindows64` build (editor pinned
   6000.3.20f1, Library cache) → zipped artifact named `{version}-{sha}`
   (bundleVersion + short SHA, P0.E1.T6 scheme) — P0.E6.T3
+- Deterministic package restore: `ci.yml` fails if `Packages/packages-lock.json` drifts
+  during import (fresh-clone import verified byte-stable) — P0.E2.T7
 
 ### Changed
 

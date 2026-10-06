@@ -74,6 +74,20 @@ jobs:
           fi
           exit "$hits"
 
+      # P0.E2.T7 — deterministic package restore: Unity must resolve strictly from the
+      # committed Packages/packages-lock.json (locked mode). Any drift during the
+      # import/test session means the restore was nondeterministic → fail the run.
+      - name: Deterministic restore gate (packages-lock.json unchanged)
+        if: always()
+        run: |
+          set -euo pipefail
+          if git diff --exit-code -- Packages/packages-lock.json; then
+            echo "packages-lock.json unchanged - restore is lock-deterministic"
+          else
+            echo "::error::packages-lock.json changed during import - nondeterministic package restore (P0.E2.T7)"
+            exit 1
+          fi
+
       - name: Upload test results + editor log
         if: always()
         uses: actions/upload-artifact@v4
