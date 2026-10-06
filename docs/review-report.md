@@ -54,10 +54,10 @@
 
 ## 5. Residual recommendations
 
-1. **Owner gate:** confirm assumptions A1–A6 and decision gates DG-1–DG-6 before implementation starts (P0.E1.T1).
+1. ~~Owner gate~~ **CLOSED 2026-10-05:** owner confirmed assumptions **A1–A6 as written** → roadmap status **APPROVED v1.2**. Decision gates **DG-1–DG-6 remain open by design** and are resolved at their phases (DG-1 → P2 start, DG-2 → P3, DG-4 → P5, DG-3 → P6, DG-5 → P8, DG-6 → post-launch) per `P0.E1.T1` kickoff.
 2. Milestones are relative (A2) — calendarize only after team velocity is known; effort totals exclude P10.
 3. `file:line` references drift once P0 fixes land — convert defect references to symbol names in P0.E3.T14.
 4. Tasks referencing not-yet-created docs (`docs/design/`, `docs/qa/`, `docs/legal/`) must create folders on first write.
 5. This review is **static**: no play-mode run was performed — `MT-SMOKE-01` (P0.E2.T6) is the first live validation.
 
-*Verdict: documentation set **passes** technical review (v1.1). Roadmap status stays pending until the owner approves A1–A6 / DG-1–DG-6.*
+*Verdict: documentation set **passes** technical review (v1.1); owner confirmed A1–A6 on 2026-10-05 → **APPROVED v1.2**, cleared for implementation. DG-1–DG-6 remain open as scheduled decision gates.*

@@ -1,6 +1,6 @@
 # Master Development Roadmap — [Working Title] Neo Cyber Shooter
 
-**Status: REVIEWED v1.1 — full QA review passed ([review report](../review-report.md)); implementation starts only after owner approval.**
+**Status: APPROVED v1.2 — QA review passed ([review report](../review-report.md)) and assumptions A1–A6 confirmed by owner (2026-10-05); implementation may start at P0.E1.T1. Decision gates DG-1–DG-6 remain open as scheduled calls.**
 Baseline: verified codebase docs in [`docs/essential/`](../essential/index.md) · Unity `6000.3.20f1` · commit `c9d5f0e` · branch `develop`.
 
 ---
@@ -38,13 +38,13 @@ Baseline: verified codebase docs in [`docs/essential/`](../essential/index.md) �
 4. **Repeatable structure** — 15–45 min sessions with meta-progression and unlockables.
 5. **Premium finish** — no placeholders in the release build; 2026 table stakes (accessibility, remapping, Steam Deck, ultrawide) are mandatory.
 
-### Explicit assumptions (flag anything wrong at review)
-- **A1** Windows PC → Steam, price **$14.99–$19.99**, regional pricing on, no microtransactions; DLC optional post-launch.
-- **A2** Small team (solo–5) + contractors; effort shown as **person-weeks**; milestones M0–M6 are *relative* — map to calendar yourself.
-- **A3** Structure: **mission-based action + meta-progression** (DG-1 can still switch to roguelite/horde).
-- **A4** Existing free-tier audio/sprites are **provisional**; provenance audit in P0, remediation before paid marketing (P8).
-- **A5** Keep URP 17 + 2D physics; upgrade `Animation` selectively (DG-4), no full Mecanim rewrite by default.
-- **A6** Single-player only; no netcode/anti-cheat (DG-6 defers consoles).
+### Explicit assumptions — ✅ CONFIRMED by owner (2026-10-05); re-flag in the change log if reality changes
+- **A1** ✅ Windows PC → Steam, price **$14.99–$19.99**, regional pricing on, no microtransactions; DLC optional post-launch.
+- **A2** ✅ Small team (solo–5) + contractors; effort shown as **person-weeks**; milestones M0–M6 are *relative* — map to calendar yourself.
+- **A3** ✅ Structure: **mission-based action + meta-progression** (DG-1 can still switch to roguelite/horde).
+- **A4** ✅ Existing free-tier audio/sprites are **provisional**; provenance audit in P0, remediation before paid marketing (P8).
+- **A5** ✅ Keep URP 17 + 2D physics; upgrade `Animation` selectively (DG-4), no full Mecanim rewrite by default.
+- **A6** ✅ Single-player only; no netcode/anti-cheat (DG-6 defers consoles).
 
 ### Decision gates (resolve before dependent work)
 | ID | Decision | Needed by | Options / recommendation |
@@ -139,5 +139,5 @@ Baseline: verified codebase docs in [`docs/essential/`](../essential/index.md) �
 1. [Phase 0 — Foundation](phase-00-foundation.md) · 2. [Phase 1 — Combat](phase-01-core-combat.md) · 3. [Phase 2 — Progression & content](phase-02-progression-content.md) · 4. [Phase 3 — UI/UX](phase-03-ui-ux.md) · 5. [Phase 4 — Audio](phase-04-audio.md) · 6. [Phase 5 — Feel & visuals](phase-05-juice-visual.md) · 7. [Phase 6 — Technical quality](phase-06-technical-quality.md) · 8. [Phase 7 — QA](phase-07-qa-testing.md) · 9. [Phase 8 — Platform & compliance](phase-08-platform-business.md) · 10. [Phase 9 — Marketing & launch](phase-09-marketing-launch.md) · 11. [Phase 10 — Post-launch](phase-10-post-launch.md)
 
 ---
-*Change log: v1.0 initial draft → **v1.1 first full QA review** — structure, cross-references, milestone coverage and code-fact verification fixes (all findings closed; see [review report](../review-report.md)).*
+*Change log: v1.0 initial draft → **v1.1 first full QA review** — structure, cross-references, milestone coverage and code-fact verification fixes (all findings closed; see [review report](../review-report.md)) → **v1.2 owner approval** — assumptions **A1–A6 confirmed 2026-10-05**, roadmap cleared for implementation (DG-1–DG-6 remain, resolved at their phases).*
 
