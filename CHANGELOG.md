@@ -40,6 +40,9 @@ Every merged PR adds an entry under `[Unreleased]` (rule: `CONTRIBUTING.md`).
 - Dead-code pass: `Assets/Scripts/_NOTES/JustNotes.cs` removed (0 GUID references, content
   archived to `docs/notes/author-notes.md`); grep report `docs/qa/dead-code-grep.md`
   (0 unjustified empty stubs, 1 live TODO) — P0.E4.T7
+- E3 triage retro (P0.E3.T14): CHANGELOG audit — all 14 prior defect fixes referenced
+  (T1–T13, T15); full MT-SMOKE-01 re-run GREEN @ `5fecd1b` (13/0/1, 0 tracked files
+  modified post-run) — evidence in `docs/qa/smoke.md`
 
 ### Changed
 

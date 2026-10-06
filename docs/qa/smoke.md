@@ -76,6 +76,23 @@ workdir-only, never committed). Counts: **PASS=13, FAIL=0, WARN=1, INFO=6**
   starts (clean exit, but no probe results); the probe quits itself via
   `EditorApplication.Exit(exitCode)` in `Finish()`.*
 
+## Full re-run for the P0.E3.T14 triage retro (2026-10-06, HEAD `5fecd1b`)
+
+- Fresh clone reset to `develop @ 5fecd1b` (all E3 fixes + the E4.T7 dead-code removal
+  in tree); probe injected untracked; launched batchmode **without `-quit`**.
+- **GREEN — `PASS=13 FAIL=0 WARN=1 INFO=6`** (`%TEMP%\neoCyber-smoke.txt`, editor log
+  `%TEMP%\neoCyber-smoke-e3t14.log`): boot (Level_00, roots=15) · presence checks
+  (TadaInput, PlayerController, PauseController, WeaponHandler ≥2 weapons,
+  PlayerPhysics+PlayerSkills) · weapon slot0 active · play sim (dash@f50, primary
+  release@f150, swap2@f155, pause@f175) · shoot (max 2 simultaneous projectiles) ·
+  swap both directions · move 2.52 u / 160 f · pause/resume (timeScale 0↔1).
+- The 1 WARN is the pre-existing editor-internal `ArgumentOutOfRangeException`
+  (baseline in every run — no `warning CS` / `error CS` anywhere in the log).
+- Post-run workdir: **0 modified tracked files** (`git diff` empty; only untracked
+  probe `Assets/Editor*`) — B.14 no-mutation and checkout hygiene hold on current HEAD.
+- Part A audit: all 14 prior E3 fixes (T1–T13, T15) referenced in `CHANGELOG.md`
+  (15 substantive `P0.E3.Tn` mentions).
+
 ## Checkout-hygiene evidence (P0.E1.T1 round-trip, same clone)
 
 - Fresh clone → batchmode open: 0 `error CS` / 0 `warning CS`; no generated files tracked.
