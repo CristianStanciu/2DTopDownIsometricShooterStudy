@@ -37,6 +37,9 @@ Every merged PR adds an entry under `[Unreleased]` (rule: `CONTRIBUTING.md`).
 - Onboarding quickstart `docs/essential/onboarding.md`: engine pin, CI secrets
   (`UNITY_LICENSE`/`UNITY_EMAIL`/`UNITY_PASSWORD`), branch rules, how tests run —
   new-contributor entry point linked from the docs index — P0.E9.T4
+- Dead-code pass: `Assets/Scripts/_NOTES/JustNotes.cs` removed (0 GUID references, content
+  archived to `docs/notes/author-notes.md`); grep report `docs/qa/dead-code-grep.md`
+  (0 unjustified empty stubs, 1 live TODO) — P0.E4.T7
 
 ### Changed
 

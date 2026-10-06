@@ -41,7 +41,8 @@ status, (B) verified defects & tech debt with file references, (C) capability ga
    - `FX/AfterImage/AfterImageGenerator.cs:36`, `FX/AfterImage/AfterImageGroup.cs:14`
    - `Player/PlayerBodyPartsHandler.cs:50`, `Player/PlayerSkills.cs:20`
    - `Utilities/Singleton.cs:33` (inside `Instance` getter)
-   - `_NOTES/JustNotes.cs:14` (comment only)
+   - ~~`_NOTES/JustNotes.cs:14` (comment only)~~ — file removed, notes archived to
+     `docs/notes/author-notes.md` (P0.E4.T7, 2026-10-06)
 3. **README is stale**: still says "made with Unity 2019.4.0f1" and v0.2 while
    `bundleVersion` is 0.1 and the editor is 6000.3.20f1.
 4. **No play-mode validation was recorded** — the upgrade commit contains no evidence of a test run
@@ -96,7 +97,8 @@ status, (B) verified defects & tech debt with file references, (C) capability ga
   `.sln`/`.csproj` files are git-ignored and regenerate on open.
 - **Legacy Input Manager** — Xbox-only axis names; no rebinding; incompatible with console/mobile.
 - **Legacy `Animation`** (no Animator) — no blending/layering/state machine.
-- **`_NOTES/JustNotes.cs`** scratch class ships in the build assembly.
+- **~~`_NOTES/JustNotes.cs` scratch class ships in the build assembly~~ — removed (P0.E4.T7)**:
+  notes archived to `docs/notes/author-notes.md`, grep report in `docs/qa/dead-code-grep.md`.
 
 ---
 

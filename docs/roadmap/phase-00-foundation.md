@@ -80,7 +80,7 @@
   - [ ] Transition matrix test: every illegal transition rejected; pause events fire exactly once
 - [ ] **P0.E4.T6** — Tuning/ScriptableObject registry: `GameTuning` root SO with sub-assets (player, weapons, enemies, economy, camera, juice); replace magic numbers in shipped code paths incrementally (each moved number = subtask noted in PR)
   - [ ] Registry loads in editor + runtime; unknown field policy documented (fail soft with warning)
-- [ ] **P0.E4.T7** — Dead-code pass: `_NOTES/JustNotes.cs` removed or moved to docs; empty stubs (`PlayerPhysics.OnTriggerExit2D` handled in P0.E3.T7) accounted for; `grep` report attached to PR
+- [x] **P0.E4.T7** — Dead-code pass: `_NOTES/JustNotes.cs` removed or moved to docs; empty stubs (`PlayerPhysics.OnTriggerExit2D` handled in P0.E3.T7) accounted for; `grep` report attached to PR *(report: `docs/qa/dead-code-grep.md` — `JustNotes.cs`+`.meta`+folder `.meta` removed after GUID `cc673a1d…` scan showed 0 asset references; notes archived verbatim to `docs/notes/author-notes.md`; empty-body scans: 0 multi-line + 2 intentional inline no-ops (`SoundManager` ctor, `Crosshair.UpdateCrosshair`); 1 live TODO remains (`TadaInput:297`); batch compile GREEN ("Exiting batchmode successfully", 0 `error CS`) — 2026-10-06; PR attachment deferred (no PR yet))*
 
 ## Epic P0.E5 — Tooling & code quality (~2 pw)
 

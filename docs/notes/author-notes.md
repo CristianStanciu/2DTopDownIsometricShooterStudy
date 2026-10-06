@@ -1,4 +1,14 @@
-﻿
+# Author's notes (archived)
+
+> Moved from `Assets/Scripts/_NOTES/JustNotes.cs` on 2026-10-06 (P0.E4.T7 dead-code pass).
+> The scratchpad MonoBehaviour compiled into the build assembly for no benefit; its content is
+> preserved verbatim below as provenance (v0.2 development log, personal TODOs and early
+> convention reminders). GUID `cc673a1d335ac474b9d6e9a7041682a5` had zero references in any
+> scene/prefab/asset — see `docs/qa/dead-code-grep.md`.
+
+## Verbatim content
+
+```csharp
 // TODO: See if the animation part of the derived weapons can be put into the Weapon base class.
 
 // NOTE: When adding a bool, use "is" or "has" as a prefix.
@@ -49,6 +59,16 @@
 
  * - Changed FireRate to UseRate and made it a Weapon only method, it's now handled by a switch that lets you change rates.
 
- * - Completelly reworked Weapon class to make it a base class and created new weapon classes.
+ * - Completelly reworked Weapon class to be a base class and created new weapon classes.
  */
+```
 
+## Where the surviving items live now
+
+| Note | Status |
+|---|---|
+| Naming conventions (`is`/`has` bools, self-explanatory functions) | Codified in `docs/essential/architecture.md` §Coding conventions |
+| Public-fields → `[SerializeField]` policy | Codified in architecture conventions |
+| Enum-based aim flags, `localUpdate` rename, pause architecture, Editor-extension labels | Historical — superseded by current code state; tracked as themes in the roadmap |
+| v0.2 work-time log | Provenance record (license/credits: `docs/essential/project-overview.md`) |
+| TODO: derived-weapon animation into `Weapon` base | Open theme — animations still legacy `Animation`; see known-issues §B structural debt |
