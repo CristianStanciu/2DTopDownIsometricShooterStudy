@@ -81,9 +81,13 @@ public class PlayerSkills : MonoBehaviour
 
     private void SetActiveTrails(bool value)
     {
+        // P0.E3.T2: guard the array once, before the loop, and null-check each element.
+        if (dashTrails == null)
+            return;
+
         for (int i = 0; i < dashTrails.Length; i++)
         {
-            if (dashTrails != null)
+            if (dashTrails[i] != null)
             {
                 dashTrails[i].emitting = value;
             }
