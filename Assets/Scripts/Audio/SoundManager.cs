@@ -58,16 +58,15 @@ public class SoundManager : Singleton<SoundManager>
 
     public void SFX_PlayOneShot(AudioClip clip, float volume, float minPitch = 1f, float maxPitch = 1f, bool unstoppable = false)
     {
-        AudioSource src = sfx.Source;
+        // P0.E3.T3: guard the emitter that actually plays (sfx/unstoppableSfx), not music.
+        SoundEmitter emitter = unstoppable ? unstoppableSfx : sfx;
 
-        if (unstoppable)
-            src = unstoppableSfx.Source;
+        if (clip == null || emitter == null)
+            return;
 
-        if (clip != null && music != null)
-        {
-            src.pitch = Random.Range(minPitch, maxPitch);
-            src.PlayOneShot(clip, volume);
-        }
+        AudioSource src = emitter.Source;
+        src.pitch = Random.Range(minPitch, maxPitch);
+        src.PlayOneShot(clip, volume);
     }
 
     /// <summary>
@@ -81,7 +80,7 @@ public class SoundManager : Singleton<SoundManager>
     private IEnumerator CO_SFX_PlayDelayedOneShot(AudioClip clip, float volume, float minPitch, float maxPitch, float delay)
     {
         yield return new WaitForSeconds(delay);
-        if (clip != null && music != null)
+        if (clip != null && sfx != null)
         {
             sfx.Source.pitch = Random.Range(minPitch, maxPitch);
             sfx.Source.PlayOneShot(clip, volume);
