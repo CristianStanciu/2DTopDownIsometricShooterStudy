@@ -28,6 +28,10 @@ Every merged PR adds an entry under `[Unreleased]` (rule: `CONTRIBUTING.md`).
   check run, and a **warning gate** failing on any `warning CS|error CS` line — P0.E6.T1
 - `docs/qa/warning-policy.md`: warning-zero policy + catalogue of every warning class on
   6000.3.20f1 (gated / accepted / classified) with suppression rules — P0.E2.T4
+- Manual Windows build pipeline `.github/workflows/build.yml`: `workflow_dispatch`
+  (optional `version` override) → game-ci `StandaloneWindows64` build (editor pinned
+  6000.3.20f1, Library cache) → zipped artifact named `{version}-{sha}`
+  (bundleVersion + short SHA, P0.E1.T6 scheme) — P0.E6.T3
 
 ### Changed
 

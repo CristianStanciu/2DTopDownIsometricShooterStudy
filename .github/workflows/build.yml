@@ -1,0 +1,103 @@
+# P0.E6.T3 — manual Windows standalone build (workflow_dispatch) → one zipped
+# artifact named {version}-{sha} (P0.E1.T6 versioning: version = PlayerSettings
+# bundleVersion, overridable via input; sha = 7-char short commit). Later reused
+# by P8/P9 for RC builds and depot uploads.
+#
+# Same license secrets as ci.yml (docs/essential/getting-started.md):
+#   UNITY_LICENSE / UNITY_EMAIL / UNITY_PASSWORD.
+# First-run notes (paired with P0.E6.T1): confirm log plumbing for
+# game-ci/unity-builder@v4 and that the -nographics batch build succeeds;
+# warning-zero policy for pushes stays in ci.yml (P0.E2.T4).
+name: build
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Version label override (default: PlayerSettings bundleVersion)"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+concurrency:
+  group: build-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  windows-standalone:
+    name: Windows standalone (StandaloneWindows64)
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout (with LFS)
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      # {version}-{sha}: version from ProjectSettings.asset (bundleVersion) unless
+      # overridden by the dispatch input; sha = 7-char short commit.
+      - name: Compute artifact label (version-sha)
+        id: meta
+        env:
+          INPUT_VERSION: ${{ inputs.version }}
+        run: |
+          set -euo pipefail
+          label_version="$(sed -n 's/^  bundleVersion: //p' ProjectSettings/ProjectSettings.asset | head -n 1)"
+          if [ -n "${INPUT_VERSION:-}" ]; then label_version="$INPUT_VERSION"; fi
+          if [ -z "$label_version" ]; then
+            echo "::error::could not resolve a version label (bundleVersion missing?)"
+            exit 1
+          fi
+          sha_short="$(git rev-parse --short=7 HEAD)"
+          label="${label_version}-${sha_short}"
+          echo "label=$label" >> "$GITHUB_OUTPUT"
+          echo "artifact label: $label"
+
+      - name: Cache Library
+        uses: actions/cache@v4
+        with:
+          path: Library
+          key: Library-StandaloneWindows64-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
+          restore-keys: |
+            Library-StandaloneWindows64-
+
+      - name: Build StandaloneWindows64
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+          UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
+          UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
+        with:
+          targetPlatform: StandaloneWindows64
+          unityVersion: 6000.3.20f1
+          projectPath: .
+          buildsPath: build
+          buildName: ${{ steps.meta.outputs.label }}
+          customParameters: -nographics
+
+      # unity-builder emits build/StandaloneWindows64/ (<label>.exe, <label>_Data/,
+      # UnityPlayer.dll, MonoBleedingEdge/). Zip the folder contents so the zip
+      # root is the game itself, named {version}-{sha}.
+      - name: Package version-sha zip
+        env:
+          LABEL: ${{ steps.meta.outputs.label }}
+        run: |
+          set -euo pipefail
+          src="build/StandaloneWindows64"
+          if [ ! -d "$src" ]; then
+            echo "::error::expected build output at $src"
+            exit 1
+          fi
+          (cd "$src" && zip -r -q "../${LABEL}.zip" .)
+          test -f "build/${LABEL}.zip"
+          echo "packaged: build/${LABEL}.zip ($(du -h "build/${LABEL}.zip" | cut -f1))"
+
+      - name: Upload version-sha artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.meta.outputs.label }}
+          path: build/${{ steps.meta.outputs.label }}.zip
+          if-no-files-found: error
+          retention-days: 30
