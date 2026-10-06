@@ -1009,6 +1009,7 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 759255768}
   chargingPFX: {fileID: 2135343188}
   chargingSFX: {fileID: 358059209}
+  chargeReuseCooldown: 0.25
 --- !u!114 &358059209
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1321,6 +1322,7 @@ MonoBehaviour:
   projectileSpawnPoint: {fileID: 644534753}
   chargingPFX: {fileID: 1574127334}
   chargingSFX: {fileID: 374505913}
+  chargeReuseCooldown: 0.25
 --- !u!114 &374505913
 MonoBehaviour:
   m_ObjectHideFlags: 0
