@@ -23,26 +23,27 @@ codebase as it exists on the `develop` branch after the Unity 6.3 upgrade
 ### Foundations
 1. [Project Overview](project-overview.md) — what the project is, provenance, package stack, license and credits.
 2. [Getting Started](getting-started.md) — opening the project, running it, controls, and where everything lives.
-3. [Code Architecture](architecture.md) — folder layout, inheritance map, singleton/patterns, coding conventions.
+3. [Onboarding](onboarding.md) — new-contributor quickstart: engine pin, CI secrets, branch rules, how tests run.
+4. [Code Architecture](architecture.md) — folder layout, inheritance map, singleton/patterns, coding conventions.
 
 ### Gameplay
-4. [Player System](player.md) — the 9 player classes, movement, dash skill, body parts, aim rig.
-5. [Weapons & Projectiles](weapons-and-projectiles.md) — `Weapon` base class, both laser weapons, charge state machine, projectile lifecycle.
+5. [Player System](player.md) — the 9 player classes, movement, dash skill, body parts, aim rig.
+6. [Weapons & Projectiles](weapons-and-projectiles.md) — `Weapon` base class, both laser weapons, charge state machine, projectile lifecycle.
 
 ### Core systems
-6. [Input System](input.md) — legacy Input Manager, `TadaInput` static API, custom axes, key bindings, mouse/gamepad duality.
-7. [Audio System](audio.md) — the dual architecture: global `SoundManager` vs local/global sound handlers, emitters, music, pause interaction.
-8. [Camera & Crosshair](camera-and-crosshair.md) — follow/offset camera, camera shake, static API, and the two-crosshair switching system.
-9. [Environment, FX & Pause](environment-and-fx.md) — wall façade switching, `EnvironmentObject`/`Trigger`, dash after-images, `PauseController`, debug tooling.
+7. [Input System](input.md) — legacy Input Manager, `TadaInput` static API, custom axes, key bindings, mouse/gamepad duality.
+8. [Audio System](audio.md) — the dual architecture: global `SoundManager` vs local/global sound handlers, emitters, music, pause interaction.
+9. [Camera & Crosshair](camera-and-crosshair.md) — follow/offset camera, camera shake, static API, and the two-crosshair switching system.
+10. [Environment, FX & Pause](environment-and-fx.md) — wall façade switching, `EnvironmentObject`/`Trigger`, dash after-images, `PauseController`, debug tooling.
 
 ### Content & configuration
-10. [Scene Inventory](scenes.md) — root objects, hierarchies, prefab instance counts, per-scene component census for both scenes.
-11. [Rendering & Post-Processing](rendering.md) — URP assets, camera settings, volume overrides, shader graph shaders, quality levels.
-12. [Assets Pipeline](assets.md) — sprites, audio clips, materials, prefabs, particles, animations and naming conventions.
-13. [Project Settings](project-settings.md) — tags, layers, input axes, physics 2D, quality, audio manager, build scenes.
+11. [Scene Inventory](scenes.md) — root objects, hierarchies, prefab instance counts, per-scene component census for both scenes.
+12. [Rendering & Post-Processing](rendering.md) — URP assets, camera settings, volume overrides, shader graph shaders, quality levels.
+13. [Assets Pipeline](assets.md) — sprites, audio clips, materials, prefabs, particles, animations and naming conventions.
+14. [Project Settings](project-settings.md) — tags, layers, input axes, physics 2D, quality, audio manager, build scenes.
 
 ### Engineering status
-14. [Known Issues & Roadmap Foundation](known-issues-and-roadmap.md) — Unity 6 upgrade artifacts, deprecated API usage, latent bugs, and candidate backlog themes.
+15. [Known Issues & Roadmap Foundation](known-issues-and-roadmap.md) — Unity 6 upgrade artifacts, deprecated API usage, latent bugs, and candidate backlog themes.
 
 **→ [Master Development Roadmap](../roadmap/README.md)** (outside this directory) — the full phase-by-phase development plan derived from these docs: epics, tasks with `- [ ]` status tracking, acceptance criteria, dependencies, effort estimates and release gates.
 
@@ -50,7 +51,9 @@ codebase as it exists on the `develop` branch after the Unity 6.3 upgrade
 
 ## How to use these docs
 
-- **New to the project?** Read [Getting Started](getting-started.md) then [Code Architecture](architecture.md).
+- **New to the project?** Start with [Onboarding](onboarding.md) (setup checklist: engine
+  pin, CI secrets, branch rules, tests), then [Getting Started](getting-started.md) and
+  [Code Architecture](architecture.md).
 - **Working on gameplay?** Start from [Player System](player.md) and [Weapons & Projectiles](weapons-and-projectiles.md).
 - **Planning work?** [Known Issues & Roadmap Foundation](known-issues-and-roadmap.md) lists verified defects and
   modernization gaps, each mapped to suggested backlog themes.

@@ -118,7 +118,7 @@
 - [ ] **P0.E9.T1** — Keep `docs/essential/` current: any scene/prefab/script change updates the matching page (DoD rule from §5)
 - [ ] **P0.E9.T2** — Import this roadmap into the tracker: epics = Jira epics, tasks = stories, IDs preserved in custom field; acceptance criteria pasted into description
 - [x] **P0.E9.T3** — ADR process: `docs/adr/NNNN-title.md` template (context/decision/consequences); bootstrap with ADR-0001 asmdefs, ADR-0002 logging, ADR-0003 test policy
-- [ ] **P0.E9.T4** — Onboarding doc: engine pin, CI secrets, branch rules, how to run tests — one page for a new contributor
+- [x] **P0.E9.T4** — Onboarding doc: engine pin, CI secrets, branch rules, how to run tests — one page for a new contributor *(new `docs/essential/onboarding.md`: 6-section checklist — prerequisites · clone/first-open · CI secrets table (`UNITY_LICENSE`/`EMAIL`/`PASSWORD` + activation link) · branch rules (with pending-protection status) · how tests run on CI + Test Runner (E7.T1 status) · pre-push DoD; linked from the docs index TOC + "How to use" section; local-link check 14/14 pass — 2026-10-06)*
 
 **Phase 0 DoD:** all boxes above `[x]`, exit criteria satisfied, M0 announced.
 

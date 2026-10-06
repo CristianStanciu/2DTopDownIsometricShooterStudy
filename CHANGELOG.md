@@ -34,6 +34,9 @@ Every merged PR adds an entry under `[Unreleased]` (rule: `CONTRIBUTING.md`).
   (bundleVersion + short SHA, P0.E1.T6 scheme) — P0.E6.T3
 - Deterministic package restore: `ci.yml` fails if `Packages/packages-lock.json` drifts
   during import (fresh-clone import verified byte-stable) — P0.E2.T7
+- Onboarding quickstart `docs/essential/onboarding.md`: engine pin, CI secrets
+  (`UNITY_LICENSE`/`UNITY_EMAIL`/`UNITY_PASSWORD`), branch rules, how tests run —
+  new-contributor entry point linked from the docs index — P0.E9.T4
 
 ### Changed
 
