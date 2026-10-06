@@ -23,6 +23,11 @@ Every merged PR adds an entry under `[Unreleased]` (rule: `CONTRIBUTING.md`).
 - This changelog (Keep a Changelog) — P0.E1.T5
 - `docs/qa/smoke.md`: MT-SMOKE-01 record — automated play-mode subset GREEN on a fresh
   clone (PASS=13/FAIL=0; boot→move→dash→shoot→weapon-swap→pause/resume→quit, exit 0) — P0.E2.T6
+- CI pipeline `.github/workflows/ci.yml`: PR/push → `develop` runs game-ci batchmode
+  (import · compile · EditMode tests, editor pinned 6000.3.20f1) with results artifact +
+  check run, and a **warning gate** failing on any `warning CS|error CS` line — P0.E6.T1
+- `docs/qa/warning-policy.md`: warning-zero policy + catalogue of every warning class on
+  6000.3.20f1 (gated / accepted / classified) with suppression rules — P0.E2.T4
 
 ### Changed
 

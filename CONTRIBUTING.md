@@ -24,4 +24,6 @@ Short guide for anyone touching this repo (full process: `docs/roadmap/README.md
 - Editor is pinned to **Unity 6000.3.20f1** — upgrades only via dedicated PR with full regression
   (see `docs/essential/getting-started.md`).
 - Do not commit `UserSettings/`, `*.sln(x)`, `*.csproj`, `Library/` — all git-ignored (P0.E1.T1).
+- **Warning-zero**: project compiles carry no `warning CS`/`error CS` — catalogue, evidence
+  and suppression rules live in `docs/qa/warning-policy.md`; `ci.yml` fails on regressions (P0.E2.T4).
 - Every merged PR adds an entry to `CHANGELOG.md` (Keep a Changelog format).
