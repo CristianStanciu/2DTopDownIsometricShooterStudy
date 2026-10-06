@@ -60,7 +60,8 @@ public class WeaponHandler : MonoBehaviour
     /// <param name="index">Used when the type is set to ByIndex.</param>
     public void SwitchWeapon(WeaponSwitchMode mode, int index = 0)
     {
-        CheckWeaponsAvailability();
+        if (!CheckWeaponsAvailability())
+            return;
         DisableAllWeapons();
         switch (mode)
         {
@@ -92,7 +93,8 @@ public class WeaponHandler : MonoBehaviour
     /// <param name="applyToAllWeapons">True by default</param>
     public void SwitchUseRate(Weapon.SwitchUseRateType type, int index = 0, bool applyToAllWeapons = true)
     {
-        CheckWeaponsAvailability();
+        if (!CheckWeaponsAvailability())
+            return;
         if (applyToAllWeapons)
         {
             for (int i = 0; i < weapons.Length; i++)
@@ -117,7 +119,8 @@ public class WeaponHandler : MonoBehaviour
     /// on this bool to determine if they should be canceled mid process (e.g. charged shot).</param>
     public void UseWeapon(ActionType type, bool value = true)
     {
-        CheckWeaponsAvailability();
+        if (!CheckWeaponsAvailability())
+            return;
 
         switch (type)
         {
@@ -146,15 +149,23 @@ public class WeaponHandler : MonoBehaviour
     /// To break the execution of the code and log a message in the console if an element 
     /// from <see cref="weapons"/> has a missing weapon.
     /// </summary>
-    private void CheckWeaponsAvailability()
+    private bool CheckWeaponsAvailability()
     {
+        if (weapons == null || weapons.Length == 0)
+        {
+            Debug.LogWarning(gameObject.name + " WeaponHandler: weapons array missing or empty!");
+            return false;
+        }
+
         for (int i = 0; i < weapons.Length; i++)
         {
             if (weapons[i] == null)
             {
                 Debug.LogWarning(gameObject.name + " WeaponHandler: weapons missing, check array!");
-                return;
+                return false;
             }
         }
+
+        return true;
     }
 }
