@@ -18,7 +18,7 @@
   - [ ] `git status` stays clean after open → edit → close editor round-trip
   - [ ] Fresh clone + open in pinned editor produces no unexpected diffs (only `Library/`, which is ignored)
   - *Acceptance pending first editor round-trip (bundle with P0.E2.T6 smoke).*
-- [ ] **P0.E1.T2** — Evaluate Git LFS for `Assets/Sprites/**` and `Assets/Audio/**`; if repo >500 MB, migrate binaries (history rewrite optional; decision recorded in an ADR)
+- [x] **P0.E1.T2** — Evaluate Git LFS for `Assets/Sprites/**` and `Assets/Audio/**`; if repo >500 MB, migrate binaries (history rewrite optional; decision recorded in an ADR)
 - [ ] **P0.E1.T3** — Branch/PR process: `main` protected, `develop` integration branch, feature branches `feat/P1.E4.T2-*`; PR template (summary, refs IDs, test evidence, doc updates); CODEOWNERS
   - [ ] Branch protection requires 1 green CI run before merge
 - [ ] **P0.E1.T4** — Pin editor version org-wide: document `6000.3.20f1` in `getting-started.md`; rule: upgrades only via dedicated PR with full regression run
