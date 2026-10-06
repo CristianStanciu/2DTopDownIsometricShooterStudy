@@ -18,6 +18,46 @@ public class GUIHandler : MonoBehaviour
 
     [SerializeField] private bool drawGUI = true;
 
+    // Single source of truth for the overlay control hints (P0.E3.T11) — the displayed text is
+    // generated from these tables so it can't drift away from the actual bindings.
+    private static readonly (string input, string action)[] MouseBindings =
+    {
+        ("WASD", "Move"),
+        ("Mouse", "Aim"),
+        ("Space", "Dash"),
+        ("1", "Weapon0"),
+        ("2", "Weapon1"),
+        ("LMB", "Act1"),
+        ("RMB", "Act2"),
+        ("Q/E", "SwitchWpn"),
+        ("C/V", "SwitchFireRate"),
+        ("Esc", "Pause")
+    };
+
+    private static readonly (string input, string action)[] GamepadBindings =
+    {
+        ("LStick", "Move"),
+        ("RStick", "Aim"),
+        ("RB", "Dash"),
+        ("RTrigger", "Action1"),
+        ("LTrigger", "Action2"),
+        ("A/B", "SwitchWeapon"),
+        ("LStickButton", "SwitchFireRate"),
+        ("Start", "Pause")
+    };
+
+    private static string FormatBindings((string input, string action)[] bindings)
+    {
+        string result = string.Empty;
+        for (int i = 0; i < bindings.Length; i++)
+        {
+            if (i > 0)
+                result += " | ";
+            result += bindings[i].input + ": " + bindings[i].action;
+        }
+        return result;
+    }
+
     private void OnGUI()
     {
         if (drawGUI)
@@ -33,8 +73,8 @@ public class GUIHandler : MonoBehaviour
             
             string s0 = $"PlayerPos->MousePos: {CrosshairMouse.AimDirection.x:0.0} , {CrosshairMouse.AimDirection.y:0.0}";
             string s1 = $"PlayerPos->CrosshairJoyDir: {CrosshairJoystick.AimDirection.x:0.0} , {CrosshairJoystick.AimDirection.y:0.0}";
-            string s2 = "WASD: Move | Mouse: Aim | Space: Dash | 1: Weapon0 | 2: Weapon2 | LMB: Act1 | RMB: Act2 | Q/E: SwitchWpn | C/V: SwitchFireRate | Esc: Pause";
-            string s3 = "LStick: Move | RStick: Aim | RB: Dash | RTrigger: Action1 | LTrigger: Action2 | A/B: SwitchWeapon | LStickButton: SwitchFireRate | Start: Pause";
+            string s2 = FormatBindings(MouseBindings);
+            string s3 = FormatBindings(GamepadBindings);
             string s4 = "";
 
             if (TadaInput.IsMouseActive)
