@@ -7,6 +7,8 @@
 - **Unity 6000.3.20f1** (exact version — `ProjectSettings/ProjectVersion.txt`). Opening with a
   different editor will trigger a re-serialization of scene/asset files; avoid committing those
   diffs unless the upgrade is intentional (see [Known Issues](known-issues-and-roadmap.md)).
+- **Upgrade policy (P0.E1.T4):** editor upgrades happen only via a dedicated PR that runs the full
+  regression suite (EditMode + PlayMode tests + `MT-SMOKE-01` smoke) — never ad hoc locally.
 - Any desktop platform supported by Unity 6. The project targets the **editor**: there are no
   platform-specific build configs beyond defaults.
 
