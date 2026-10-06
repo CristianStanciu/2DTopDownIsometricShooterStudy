@@ -26,8 +26,9 @@ debt with file references, (C) capability gaps, (D) candidate roadmap themes.
 
 **Outstanding upgrade risks (verified):**
 
-1. **`SingleWall_Test.unity` was never re-serialized** — untouched by the upgrade commit; it will
-   produce a large diff the first time it's opened/saved in 6.3.
+1. **`SingleWall_Test.unity` was never re-serialized** — *resolved: re-serialized by **P0.E2.T1***
+   (2026-10-05, batchmode open→save→reopen; census identical before/after, 0 missing scripts,
+   +800/−207 lines; `SingleWall_TestSettings.lighting` extracted on save).
 2. **Deprecated API warnings**: `FindObjectOfType<T>()` is obsolete in Unity 6 (should be
    `FindAnyObjectByType`/`FindFirstObjectByType`). Occurrences (13 call sites in 9 scripts):
    - `Audio/SoundManager.cs:37,43,49`

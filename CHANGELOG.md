@@ -24,6 +24,8 @@ Every merged PR adds an entry under `[Unreleased]` (rule: `CONTRIBUTING.md`).
 
 ### Changed
 
+- Re-serialized `SingleWall_Test.unity` for 6000.3.20f1 (+800/−207 lines; census identical, 0 missing
+  scripts; lighting settings extracted to `SingleWall_TestSettings.lighting`) — P0.E2.T1
 - Migrated 13 obsolete `FindObjectOfType` call sites (9 scripts) to `FindFirstObjectByType` —
   zero CS0618 warnings on compile — P0.E2.T2
 - Root `README.md` refreshed: engine pin 6000.3.20f1 + upgrade story, documentation links,

@@ -29,8 +29,8 @@
 
 ## Epic P0.E2 — Unity 6.3 hardening (~3 pw)
 
-- [ ] **P0.E2.T1** — Re-serialize `SingleWall_Test.unity` in 6000.3.20f1 (upgrade commit `c9d5f0e` never touched it) and commit
-  - [ ] Script-component census after save matches `docs/essential/scenes.md` (no missing scripts / lost `m_Script` GUIDs)
+- [x] **P0.E2.T1** — Re-serialize `SingleWall_Test.unity` in 6000.3.20f1 (upgrade commit `c9d5f0e` never touched it) and commit
+  - [x] Script-component census after save matches `docs/essential/scenes.md` (no missing scripts / lost `m_Script` GUIDs) *(batchmode open→save→reopen census: 13 roots / 94 GOs / 230 components / 51 types identical before vs after, 0 missing scripts; diff +800/−207 lines)*
 - [x] **P0.E2.T2** — Replace all 13 obsolete `FindObjectOfType` call sites (in 9 scripts) with `FindFirstObjectByType`/`FindAnyObjectByType`: `SoundManager.cs:37,43,49`, `CrosshairHandler.cs:26,27`, `CrosshairJoystick.cs:55,56`, `CrosshairMouse.cs:36`, `AfterImageGenerator.cs:36`, `AfterImageGroup.cs:14`, `PlayerBodyPartsHandler.cs:50`, `PlayerSkills.cs:20`, `Singleton.cs:33`; also drop the stale comment mention in `JustNotes.cs:14`
   - [x] Zero CS0618/obsolete warnings in console & CI log *(batchmode compile 2026-10-05: 0 warning/0 error/0 CS0618; re-check in CI at P0.E6.T1)*
 - [x] **P0.E2.T3** — Null-guard unguarded lookups (`CrosshairMouse`/`CrosshairJoystick` → `FindAnyObjectByType<PlayerController>()?.transform`) — closes defect P0.E3.T9

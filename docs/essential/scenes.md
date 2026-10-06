@@ -95,8 +95,8 @@ scene-level setup (new managers, wiring) must usually be done **twice** (roadmap
 |---|---|---|
 | GUID (build settings) | `2cda990e2423bbf4892e6590ba056729` | not in build |
 | In build | yes (index 0, enabled) | no |
-| Re-serialized by Unity 6 upgrade commit `c9d5f0e` | yes (~4.3k lines changed) | **no** (untouched — will re-serialize on first open) |
-| Lighting settings asset embedded | `Settings.lighting` | — |
+| Re-serialized by Unity 6 upgrade commit `c9d5f0e` | yes (~4.3k lines changed) | **no** by the upgrade — re-serialized later by **P0.E2.T1** (2026-10-05: +800/−207 lines, census preserved) |
+| Lighting settings asset embedded | `Settings.lighting` | `SingleWall_TestSettings.lighting` (external — extracted by P0.E2.T1) |
 
 ## Runtime-created objects (not in any scene file)
 
