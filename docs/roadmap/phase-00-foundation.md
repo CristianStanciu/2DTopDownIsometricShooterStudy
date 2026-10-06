@@ -96,7 +96,7 @@
 - [ ] **P0.E6.T2** — Nightly `nightly.yml`: PlayMode smoke (headless): load `Level_00`, simulate 5 s input, assert no exceptions; results emailed/Slack
 - [~] **P0.E6.T3** — `build.yml` (manual dispatch): Windows standalone build → zipped artifact named `{version}-{sha}`; later reused by P8/P9 for RC and depot uploads
   - *Workflow written & YAML/bash-validated 2026-10-06: `workflow_dispatch` (optional `version` override) → label `{bundleVersion}-{sha7}` read from `ProjectSettings.asset` → `game-ci/unity-builder@v4` `StandaloneWindows64` on `ubuntu-latest` (same license secrets as `ci.yml`; `buildName` = label; `Library` cache) → zip of `build/StandaloneWindows64/` → artifact `{version}-{sha}`. Pending: push + first manual run (blocked with `gh auth login`) incl. confirming builder log plumbing.*
-- [ ] **P0.E6.T4** — Branch protection: require `ci.yml` green + 1 review (or self-review checklist for solo) ; add `CONTRIBUTING.md` short guide
+- [~] **P0.E6.T4** — Branch protection: require `ci.yml` green + 1 review (or self-review checklist for solo) ; add `CONTRIBUTING.md` short guide *(local deliverables shipped: `CONTRIBUTING.md` short guide (branch model, PR rules, warning-zero, changelog DoD) + `PULL_REQUEST_TEMPLATE.md` with the self-review checklist + `CODEOWNERS` — enforcement itself is GitHub settings: needs first green `ci.yml` (P0.E6.T1) + `gh auth login`, deferred to the repo owner — 2026-10-06)*
 
 ## Epic P0.E7 — Test foundation (~2 pw)
 
