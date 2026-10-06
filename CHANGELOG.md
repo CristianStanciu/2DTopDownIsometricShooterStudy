@@ -47,6 +47,15 @@ Every merged PR adds an entry under `[Unreleased]` (rule: `CONTRIBUTING.md`).
 - `PlayerSkills.SetActiveTrails()` null-checks trail elements (array guarded once, before the loop)
   — P0.E3.T2
 - `SoundManager` SFX methods guard the SFX emitter (`sfx`/`unstoppableSfx`), not `music` — P0.E3.T3
+- `PlayerController` weapon slots read `TadaInput.ThisKey.WeaponSlot1/2` instead of raw
+  `Input.GetKeyDown(KeyCode.Alpha1/Alpha2)` → slot switching works on gamepad (X/Y buttons);
+  overlay gamepad table and `getting-started.md` show the new bindings — P0.E3.T4
+- Charge weapon: `chargeReuseTimer` cooldown started in `OnChargingEnd()` stops the weak charging
+  shake from overriding the release shake (author's NOTE fixed); window serialized per weapon
+  (`chargeReuseCooldown = 0.25s`), moves to the tuning SO with P0.E4.T6 — P0.E3.T5
+- `TadaInput`: duplicate `KeyUp(NextUseRate)` block removed; `MouseAnyMovement` now stored (axis
+  semantics); statics reset every play start via `[RuntimeInitializeOnLoadMethod]` so `GetKeyDown`
+  state can't leak across sessions — P0.E3.T8
 - Wall façades restore when the player exits an environment trigger (`OnTriggerExit2D` mirrors enter
   logic via `EnvironmentObjectTrigger.RestoreObjects()` / `EnvironmentObject.RestoreStartSet()`) — P0.E3.T7
 - Camera follow smoothing uses `Time.fixedDeltaTime` → frame-rate-independent convergence — P0.E3.T10
