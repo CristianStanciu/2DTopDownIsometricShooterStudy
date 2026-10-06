@@ -52,7 +52,7 @@ my-game/
 ├── docs/essential/       # this documentation
 ├── Packages/             # manifest.json (URP 17.3.0, 2D packages, etc.)
 ├── ProjectSettings/      # tags, layers, input, physics, quality, build scenes
-├── UserSettings/         # per-user editor state (committed — see Known Issues)
+├── UserSettings/         # per-user editor state (git-ignored; untracked in P0.E1.T1)
 ├── .editorconfig         # C# style rules
 ├── .gitignore            # standard Unity ignore (Library/, Temp/, Logs/…)
 ├── .vsconfig             # Visual Studio workload list (added by Unity 6 upgrade)

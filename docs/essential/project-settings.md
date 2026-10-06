@@ -98,9 +98,8 @@ Scene 1: enabled=0  path empty (leftover entry — safe to delete)
 - **`AudioManager`/`TimeManager`/`DynamicsManager`**: defaults except as listed above.
 - **`.editorconfig`** (repo root): C# formatting rules for IDEs.
 - **`.vsconfig`**: Visual Studio workloads (added by upgrade).
-- **`UserSettings/` is committed** (editor layouts for 2021/2022/2023/6000 + `Search.index`) —
-  per-user noise in git; candidate for `.gitignore` cleanup
-  ([Known Issues](known-issues-and-roadmap.md)).
+- **`UserSettings/` is git-ignored** since P0.E1.T1 (previously committed: editor layouts for
+  2021/2022/2023/6000 + `Search.index` — removed from the index, kept on disk).
 - **Tag/layer usage**: projectiles ignore everything except `Wall` triggers; verify collision matrix
   when adding enemies (roadmap item).
 
