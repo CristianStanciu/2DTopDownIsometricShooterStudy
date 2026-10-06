@@ -3,15 +3,15 @@
 [Index](index.md) · [Architecture](architecture.md) · [Project Settings](project-settings.md)
 
 Two scenes exist under `Assets/Scenes/`. Only `Level_00` is enabled in
-`EditorBuildSettings` (a leftover second entry has `enabled: 0` and an empty path).
+`EditorBuildSettings` (the leftover disabled empty-path entry was removed by P0.E3.T12).
 
 ## `Level_00.unity` (main)
 
-**13 root GameObjects** (verified from transform parents):
+**15 root GameObjects** (verified from transform parents; census re-run 2026-10-06: 0 missing scripts):
 
 ```
 TadaInput | Post Processing | Player | CameraPivot | SoundManager | MusicHandler
-CrosshairHandler | Level_01 | Level | AfterImages | MouseCrosshair
+CrosshairHandler | Level_01 | Level | AfterImages | MouseCrosshair | pfx_Warp_Yellow
 PauseController | DebugHandler | JoystickCrosshair
 ```
 
@@ -32,6 +32,7 @@ PauseController | DebugHandler | JoystickCrosshair
 | `MouseCrosshair` / `JoystickCrosshair` | the two crosshair objects |
 | `PauseController` | pause toggling + UnityEvents |
 | `DebugHandler` | `GUIHandler` (on) + `GizmosHandler` (on) |
+| `pfx_Warp_Yellow` | particle prefab instance kept as a scene root (see Prefab instances) |
 
 ### Prefab instances (verified counts)
 
@@ -95,7 +96,7 @@ scene-level setup (new managers, wiring) must usually be done **twice** (roadmap
 |---|---|---|
 | GUID (build settings) | `2cda990e2423bbf4892e6590ba056729` | not in build |
 | In build | yes (index 0, enabled) | no |
-| Re-serialized by Unity 6 upgrade commit `c9d5f0e` | yes (~4.3k lines changed) | **no** by the upgrade — re-serialized later by **P0.E2.T1** (2026-10-05: +800/−207 lines, census preserved) |
+| Re-serialized on 6000.3.20f1 | **not** by upgrade commit `c9d5f0e` (~4.3k lines = LightingSettings extraction + URP formats; still RenderSettings v9, no SceneRoots) — completed by **P0.E2.T1** follow-up `d6455af` (2026-10-06: +1512/−380 lines, census identical, save idempotent) | **no** by the upgrade — re-serialized later by **P0.E2.T1** (2026-10-05: +800/−207 lines, census preserved) |
 | Lighting settings asset embedded | `Settings.lighting` | `SingleWall_TestSettings.lighting` (external — extracted by P0.E2.T1) |
 
 ## Runtime-created objects (not in any scene file)

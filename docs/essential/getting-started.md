@@ -19,7 +19,7 @@
 2. Add the project folder (`my-game/`) via Unity Hub; Unity will regenerate `Library/` on first open
    (takes a few minutes; `Library/` is git-ignored).
 3. Open scene **`Assets/Scenes/Level_00.unity`** — it is the only scene enabled in
-   `EditorBuildSettings` (a second, disabled, empty-path entry exists as a leftover).
+   `EditorBuildSettings` (the leftover empty-path entry was removed by P0.E3.T12).
 4. Press **Play**. The `GUIHandler` OnGUI overlay shows live aim vectors and the control scheme.
 
 > `Assets/Scenes/SingleWall_Test.unity` is a minimal test scene (one wall + one trigger + player +
@@ -57,10 +57,11 @@ my-game/
 ├── UserSettings/         # per-user editor state (git-ignored; untracked in P0.E1.T1)
 ├── .editorconfig         # C# style rules
 ├── .gitignore            # standard Unity ignore (Library/, Temp/, Logs/…)
+├── .gitattributes        # LF pinned for Unity serialized text (no EOL phantom diffs, P0.E1.T1)
 ├── .vsconfig             # Visual Studio workload list (added by Unity 6 upgrade)
-├── Assembly-CSharp.csproj / my-game.sln / my-game.slnx   # generated IDE files
+├── Assembly-CSharp.csproj / my-game.sln / my-game.slnx   # generated IDE files (git-ignored)
 ├── LICENSE               # MIT (c) 2020 Tadadosi
-└── README.md             # original upstream README (v0.2, references Unity 2019.4)
+└── README.md             # README refreshed for 6000.3.20f1 (P0.E2.T5)
 ```
 
 ## First things to try in Play mode

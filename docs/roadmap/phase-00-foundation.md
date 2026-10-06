@@ -14,10 +14,10 @@
 
 ## Epic P0.E1 — Repository & environment hygiene (~2 pw)
 
-- [~] **P0.E1.T1** — Fix `.gitignore` for Unity: stop tracking `UserSettings/`, generated `*.sln`, `*.csproj`, `*.slnx` (keep `.vsconfig`); add `Logs/`, `MemoryCaptures/`, `.vs/`; `git rm --cached` the tracked ones
-  - [ ] `git status` stays clean after open → edit → close editor round-trip
-  - [ ] Fresh clone + open in pinned editor produces no unexpected diffs (only `Library/`, which is ignored)
-  - *First batchmode editor open (P0.E2.T1) regenerated `ProjectSettings/SceneTemplateSettings.json` (PhysicMaterial → PhysicsMaterial) — committed so status stays clean; interactive open→edit→close round-trip + fresh-clone check still pending (bundle with P0.E2.T6 smoke).*
+- [x] **P0.E1.T1** — Fix `.gitignore` for Unity: stop tracking `UserSettings/`, generated `*.sln`, `*.csproj`, `*.slnx` (keep `.vsconfig`); add `Logs/`, `MemoryCaptures/`, `.vs/`; `git rm --cached` the tracked ones
+  - [x] `git status` stays clean after open → edit → close editor round-trip *(fresh-clone batchmode open→save→close of both scenes: `git diff --stat` empty, only untracked probe tooling — 2026-10-06; evidence in `docs/qa/smoke.md`)*
+  - [x] Fresh clone + open in pinned editor produces no unexpected diffs (only `Library/`, which is ignored) *(fresh clone @`74b6552`: import 0 `error CS` / 0 `warning CS`; no generated files tracked; `.gitignore` complete)*
+  - *Round-trip finding (2026-10-06): `core.autocrlf=true` checkouts were CRLF while Unity always writes LF → the first editor save produced a phantom `M` (reproduced on `ProjectSettings/ShaderGraphSettings.asset`: index 576 vs disk 557 bytes, content byte-identical). Fixed by `.gitattributes` pinning `eol=lf` for 13 Unity-serialized text types (`74b6552`); the probe also discovered `Level_00.unity` was never written in 6000.3.20f1 format — re-saved and committed as `d6455af`.*
 - [x] **P0.E1.T2** — Evaluate Git LFS for `Assets/Sprites/**` and `Assets/Audio/**`; if repo >500 MB, migrate binaries (history rewrite optional; decision recorded in an ADR)
 - [~] **P0.E1.T3** — Branch/PR process: `main` protected, `develop` integration branch, feature branches `feat/P1.E4.T2-*`; PR template (summary, refs IDs, test evidence, doc updates); CODEOWNERS
   - [ ] Branch protection requires 1 green CI run before merge
@@ -34,9 +34,9 @@
 - [x] **P0.E2.T2** — Replace all 13 obsolete `FindObjectOfType` call sites (in 9 scripts) with `FindFirstObjectByType`/`FindAnyObjectByType`: `SoundManager.cs:37,43,49`, `CrosshairHandler.cs:26,27`, `CrosshairJoystick.cs:55,56`, `CrosshairMouse.cs:36`, `AfterImageGenerator.cs:36`, `AfterImageGroup.cs:14`, `PlayerBodyPartsHandler.cs:50`, `PlayerSkills.cs:20`, `Singleton.cs:33`; also drop the stale comment mention in `JustNotes.cs:14`
   - [x] Zero CS0618/obsolete warnings in console & CI log *(batchmode compile 2026-10-05: 0 warning/0 error/0 CS0618; re-check in CI at P0.E6.T1)*
 - [x] **P0.E2.T3** — Null-guard unguarded lookups (`CrosshairMouse`/`CrosshairJoystick` → `FindAnyObjectByType<PlayerController>()?.transform`) — closes defect P0.E3.T9
-- [ ] **P0.E2.T4** — **Warning-zero policy**: catalogue every warning class; fix or suppress-with-reason; CI fails on new `Warning CS|error CS` lines
+- [~] **P0.E2.T4** — **Warning-zero policy**: catalogue every warning class; fix or suppress-with-reason; CI fails on new `Warning CS|error CS` lines *(catalogue: batchmode compiles on 6000.3.20f1 emit 0 `warning CS` / 0 `error CS` — CS0618 eliminated in E2.T2; Unity's scaffold suppressions `/nowarn:0169,0649,0282,1701,1702` are engine defaults with reasons; runtime play log in MT-SMOKE-01: 0 game warnings + 1 editor-internal exception classified (`docs/qa/smoke.md`); CI fail-gate pending P0.E6.T1)*
 - [x] **P0.E2.T5** — Refresh `README.md`: correct engine `6000.3.20f1`, upgrade story (2019.4 → 6000.3), link to `docs/essential/`, controls table
-- [ ] **P0.E2.T6** — **Play-mode validation** on a clean checkout: run manual case `MT-SMOKE-01` (boot → Level_00 → move/dash/shoot/weapon-swap → pause → quit); record in `docs/qa/smoke.md`
+- [~] **P0.E2.T6** — **Play-mode validation** on a clean checkout: run manual case `MT-SMOKE-01` (boot → Level_00 → move/dash/shoot/weapon-swap → pause → quit); record in `docs/qa/smoke.md` *(automated subset GREEN 2026-10-06 on fresh clone @`74b6552`: PASS=13 / FAIL=0 / WARN=1 editor-internal, exit 0 — full record in `docs/qa/smoke.md`; pending manual: gamepad, audio, wall-façade observation, interactive quit)*
 - [ ] **P0.E2.T7** — Confirm deterministic package restore from committed `packages-lock.json`; CI uses locked mode
 
 ## Epic P0.E3 — Defect burn-down (13 verified defects, ~3 pw)

@@ -21,11 +21,16 @@ Every merged PR adds an entry under `[Unreleased]` (rule: `CONTRIBUTING.md`).
 - Git LFS evaluation: not adopted, revisit triggers recorded (ADR-0004) — P0.E1.T2
 - Contribution flow: PR template, CODEOWNERS, `CONTRIBUTING.md` — P0.E1.T3
 - This changelog (Keep a Changelog) — P0.E1.T5
+- `docs/qa/smoke.md`: MT-SMOKE-01 record — automated play-mode subset GREEN on a fresh
+  clone (PASS=13/FAIL=0; boot→move→dash→shoot→weapon-swap→pause/resume→quit, exit 0) — P0.E2.T6
 
 ### Changed
 
 - Re-serialized `SingleWall_Test.unity` for 6000.3.20f1 (+800/−207 lines; census identical, 0 missing
   scripts; lighting settings extracted to `SingleWall_TestSettings.lighting`) — P0.E2.T1
+- Re-serialized `Level_00.unity` for 6000.3.20f1 (+1512/−380 lines; census identical
+  15 roots/2518 GOs/4210 components/0 missing scripts, save idempotent) — found by the
+  P0.E1.T1 round-trip probe: `c9d5f0e` had only partially updated the scene — P0.E2.T1
 - Migrated 13 obsolete `FindObjectOfType` call sites (9 scripts) to `FindFirstObjectByType` —
   zero CS0618 warnings on compile — P0.E2.T2
 - Root `README.md` refreshed: engine pin 6000.3.20f1 + upgrade story, documentation links,
@@ -66,3 +71,8 @@ Every merged PR adds an entry under `[Unreleased]` (rule: `CONTRIBUTING.md`).
 - Crosshair NRE when `PlayerController` absent (mouse + joystick lookups null-guarded) — P0.E2.T3
   (defect P0.E3.T9 code part)
 - 17 documentation defects from the QA review (details: `docs/review-report.md`)
+- Fresh-clone phantom modifications: Unity writes serialized text as LF while
+  `core.autocrlf=true` checkouts were CRLF, so the first editor save always showed `M`
+  (reproduced on `ShaderGraphSettings.asset`, content byte-identical); `.gitattributes`
+  pins `eol=lf` for 13 Unity-serialized text types — open→save→close now leaves
+  `git status` clean — P0.E1.T1

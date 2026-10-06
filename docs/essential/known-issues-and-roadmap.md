@@ -3,8 +3,10 @@
 [Index](index.md) · [Architecture](architecture.md) · [Project Settings](project-settings.md)
 
 Everything in this page was **verified against the code/scenes/settings on `develop`**
-(commit `c9d5f0e`). It is organized as: (A) Unity 6 upgrade status, (B) verified defects & tech
-debt with file references, (C) capability gaps, (D) candidate roadmap themes.
+(commit `c9d5f0e`; re-verification pass at `74b6552`, 2026-10-06 — E1.T1 round-trip +
+E2.T6 smoke evidence in `docs/qa/smoke.md`). It is organized as: (A) Unity 6 upgrade
+status, (B) verified defects & tech debt with file references, (C) capability gaps,
+(D) candidate roadmap themes.
 
 ---
 
@@ -16,7 +18,7 @@ debt with file references, (C) capability gaps, (D) candidate roadmap themes.
 |---|---|
 | `ProjectVersion.txt` | `2019.4.0f1` → `6000.3.20f1` (direct jump across ~7 major versions) |
 | `Physics2DHandler.cs` | `Rigidbody2D.velocity` → **`linearVelocity`** (Unity 6 rename) — the *only* code fix |
-| `Level_00.unity` | fully re-serialized (~4,315 lines changed) |
+| `Level_00.unity` | *partially* updated by the upgrade (~4.3k lines: LightingSettings extraction + URP formats; still RenderSettings v9, no SceneRoots) — fully re-serialized on 6000.3.20f1 by the **P0.E2.T1** follow-up `d6455af` (+1,512/−380, census identical, save idempotent) |
 | `TagManager.asset` | serializedVersion 2 → 3, `m_RenderingLayers` block added |
 | URP assets, materials, shader graphs | re-serialized to URP 17 formats |
 | `manifest.json` | packages bumped (URP 17.3.0, 2D packages 13.x/12.x, `com.unity.ugui 2.0.0`; old `com.unity.textmeshpro` removed — merged into uGUI) |
@@ -43,9 +45,16 @@ debt with file references, (C) capability gaps, (D) candidate roadmap themes.
 3. **README is stale**: still says "made with Unity 2019.4.0f1" and v0.2 while
    `bundleVersion` is 0.1 and the editor is 6000.3.20f1.
 4. **No play-mode validation was recorded** — the upgrade commit contains no evidence of a test run
-   (no tests exist in the project at all).
+   (no tests exist in the project at all). *Partially resolved 2026-10-06: MT-SMOKE-01 automated
+   subset GREEN on a fresh clone (`docs/qa/smoke.md`); manual gamepad/audio pass still pending.*
 5. First open with any other 6.x patch will re-serialize again — recommend pinning 6000.3.20f1
    for the team.
+6. **Fresh-clone EOL phantom modifications** (found by the P0.E1.T1 round-trip probe): git
+   (`core.autocrlf=true`) checked out CRLF but Unity always writes LF → the first editor save
+   flagged every touched serialized file as modified with byte-identical content (reproduced on
+   `ProjectSettings/ShaderGraphSettings.asset`: index 576 vs disk 557 bytes). *Resolved:
+   `.gitattributes` pins `eol=lf` for 13 Unity-serialized text types (`74b6552`); round-trip
+   now clean — evidence in `docs/qa/smoke.md`.*
 
 ---
 
@@ -68,6 +77,7 @@ debt with file references, (C) capability gaps, (D) candidate roadmap themes.
 | 11 | `GUIHandler` overlay text | Says `2: Weapon2` but key `2` maps to weapon **index 1** (cosmetic misinformation). |
 | 12 | `EditorBuildSettings` | Leftover disabled scene entry with empty path. |
 | 13 | `EnvironmentObjectTrigger.SetActiveObjects()` | No null-guard on the arrays themselves (elements are guarded). |
+| 14 | `PlayerMaterials.bodyMaterial` | `Update()` writes `_ColorIntensity` directly on the **shared material asset** (serialized field ref) during the dash highlight → a play session dirties `mat_PlayerBody.mat` (observed: mid-animation value `1.5622337` persisted on batch quit during MT-SMOKE-01 — real content diff, not EOL). Fix: runtime material instance / `MaterialPropertyBlock`. Candidate P0.E3 task, found by P0.E2.T6. |
 
 ### Structural debt
 
@@ -81,8 +91,9 @@ debt with file references, (C) capability gaps, (D) candidate roadmap themes.
 - **No assembly definitions** — everything recompiles in one assembly; slow iteration as the
   project grows; no way to isolate editor/test code.
 - **No tests** despite `com.unity.test-framework 1.6.0` in the manifest.
-- **`UserSettings/` + generated IDE files committed** (`.sln`, `.csproj`, `.slnx`) — repo noise;
-  standard Unity `.gitignore` normally excludes them (only `Library/`, `Temp/`, `Logs/` are covered).
+- **~~`UserSettings/` + generated IDE files committed~~ — resolved (P0.E1.T1)**: untracked via
+  `git rm --cached` and `.gitignore` hardened (`UserSettings/`, `*.slnx`, `Logs/`, …); IDE
+  `.sln`/`.csproj` files are git-ignored and regenerate on open.
 - **Legacy Input Manager** — Xbox-only axis names; no rebinding; incompatible with console/mobile.
 - **Legacy `Animation`** (no Animator) — no blending/layering/state machine.
 - **`_NOTES/JustNotes.cs`** scratch class ships in the build assembly.
