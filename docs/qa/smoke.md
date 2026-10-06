@@ -56,6 +56,26 @@ so any game-code exception still fails the run. Game warnings during play: **0**
 (the `Missing behaviour classes!` / `weapons missing` guard-warnings are treated
 as failures by the probe).
 
+## Automated subset — 2026-10-06 (P0.E3.T15 re-run) — GREEN
+
+Regression run of the same probe against the **B.14 fix** (fresh clone of
+`develop` @`b36b61e` + fixed `PlayerMaterials.cs` injected; probe stays
+workdir-only, never committed). Counts: **PASS=13, FAIL=0, WARN=1, INFO=6**
+(`date(UTC)` 2026-10-06 19:07:54, `[QaPlaySmoke] finished, fails=0`).
+
+- **B.14 proof:** post-run `git status --porcelain` lists only the injected fix +
+  probe tooling — `mat_PlayerBody.mat` **byte-identical** (the pre-fix run
+  persisted `1.5622337` on the same sequence; dash at frame 50 included).
+- **Positive binding proof** (temp `B14Verify` harness, same clone): production
+  `Awake()`/`FindBodyRenderers()` bound **17/17** scene renderers; the historic
+  value `1.5622337` round-tripped through property blocks on all 17; asset
+  `_ColorIntensity` read **1 → 1**; `B14-VERIFY: GREEN`.
+- Compile: **0 `warning CS` / 0 `error CS`** across the run log.
+- *Gotcha for future runs: launch **without `-quit`** — `-quit` races
+  `EditorApplication.EnterPlaymode()` and the editor exits before the simulation
+  starts (clean exit, but no probe results); the probe quits itself via
+  `EditorApplication.Exit(exitCode)` in `Finish()`.*
+
 ## Checkout-hygiene evidence (P0.E1.T1 round-trip, same clone)
 
 - Fresh clone → batchmode open: 0 `error CS` / 0 `warning CS`; no generated files tracked.
@@ -69,12 +89,14 @@ as failures by the probe).
 
 ## Known caveats
 
-- **`PlayerMaterials` dirties a material asset during play** (verified this run):
-  `Update()` writes `_ColorIntensity` on the shared `mat_PlayerBody.mat` asset
-  (serialized field reference) during the dash highlight; the batch quit persisted the
-  mid-animation value `1.5622337` — a *real content* diff (not EOL). Recovery:
-  `git checkout -- Assets/Materials/Player/mat_PlayerBody.mat`; proper fix = runtime
-  material instance / `MaterialPropertyBlock` (candidate defect: Known Issues §B.14).
+- ~~**`PlayerMaterials` dirties a material asset during play**~~ — **resolved
+  (P0.E3.T15, same day)**: the highlight now drives per-renderer
+  `MaterialPropertyBlock`s; the B.14 re-run below left `mat_PlayerBody.mat`
+  byte-identical (`git status` clean; harness: 17/17 renderers bound, asset
+  `_ColorIntensity` 1→1). Original finding, for history: `Update()` wrote
+  `_ColorIntensity` on the shared asset during the dash highlight and the batch
+  quit persisted the mid-animation value `1.5622337` — recovery was
+  `git checkout -- Assets/Materials/Player/mat_PlayerBody.mat`.
 
 ## Pending manual coverage
 

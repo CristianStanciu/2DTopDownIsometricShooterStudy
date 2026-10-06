@@ -14,7 +14,7 @@ input dispatcher; every actual behaviour is delegated.
 | `PlayerPhysics` | `Physics2DHandler` | Movement: `FixedUpdate` → `SetVelocity(TadaInput.MoveAxisRawInput, MoveSpeed)` when `CanMove`. `MoveSpeed = 6`. Handles `OnTriggerEnter2D` with tag `EnvironmentTrigger` → `EnvironmentObjectTrigger.SetActiveObjects()` (wall façade switching). `OnTriggerExit2D` is an empty stub. |
 | `PlayerSkills` | `MonoBehaviour` | The **dash**. See below. |
 | `PlayerAnimations` | `AnimationHandler` | Legacy `Animation` clips (Idle / WalkForward / WalkBackwards). `PlayMoveAnimationsByMoveInputAndLookDirection(moveInput)` selects the clip; `SetAnimationSpeed` ties clip speed to `PlayerPhysics.Velocity.magnitude`. |
-| `PlayerMaterials` | `MonoBehaviour` | Player body material highlight (used by dash). |
+| `PlayerMaterials` | `MonoBehaviour` | Player body material highlight (used by dash). Since P0.E3.T15 the intensity is applied via per-renderer `MaterialPropertyBlock`s bound in `Awake()` — the shared `mat_PlayerBody.mat` asset is never mutated. |
 | `PlayerBodyPartsHandler` | `MonoBehaviour` | Coordinates body aim states; exposes static `isRightDirection` consumed by `Projectile.Fire()` for travel direction; resolves `PlayerShoulderSecondary` via `FindObjectOfType`; respects pause. |
 | `PlayerShoulderMain` | `MonoBehaviour` | Main shoulder pivot — follow target for the joystick crosshair (`CrosshairJoystick.pointToFollow`). |
 | `PlayerShoulderSecondary` | `MonoBehaviour` | Secondary shoulder pivot used by body-parts logic. |

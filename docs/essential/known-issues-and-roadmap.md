@@ -77,7 +77,7 @@ status, (B) verified defects & tech debt with file references, (C) capability ga
 | 11 | `GUIHandler` overlay text | Says `2: Weapon2` but key `2` maps to weapon **index 1** (cosmetic misinformation). |
 | 12 | `EditorBuildSettings` | Leftover disabled scene entry with empty path. |
 | 13 | `EnvironmentObjectTrigger.SetActiveObjects()` | No null-guard on the arrays themselves (elements are guarded). |
-| 14 | `PlayerMaterials.bodyMaterial` | `Update()` writes `_ColorIntensity` directly on the **shared material asset** (serialized field ref) during the dash highlight → a play session dirties `mat_PlayerBody.mat` (observed: mid-animation value `1.5622337` persisted on batch quit during MT-SMOKE-01 — real content diff, not EOL). Fix: runtime material instance / `MaterialPropertyBlock`. Candidate P0.E3 task, found by P0.E2.T6. |
+| 14 | `PlayerMaterials.bodyMaterial` | `Update()` writes `_ColorIntensity` directly on the **shared material asset** (serialized field ref) during the dash highlight → a play session dirties `mat_PlayerBody.mat` (observed: mid-animation value `1.5622337` persisted on batch quit during MT-SMOKE-01 — real content diff, not EOL). Fix: runtime material instance / `MaterialPropertyBlock`. Candidate P0.E3 task, found by P0.E2.T6. → **Fixed — P0.E3.T15**: highlight now drives per-renderer `MaterialPropertyBlock`s (asset never mutated). |
 
 ### Structural debt
 

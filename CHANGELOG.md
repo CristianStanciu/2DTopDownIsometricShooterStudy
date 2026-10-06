@@ -73,6 +73,10 @@ Every merged PR adds an entry under `[Unreleased]` (rule: `CONTRIBUTING.md`).
   selects weapon index 1) — P0.E3.T11
 - Leftover empty-path scene entry removed from `EditorBuildSettings.asset` — P0.E3.T12
 - `EnvironmentObjectTrigger.SetActiveObjects()` null-guards the arrays themselves — P0.E3.T13
+- Dash highlight no longer mutates the shared material asset: `PlayerMaterials` applies
+  `_ColorIntensity` through per-renderer `MaterialPropertyBlock`s bound in `Awake()`
+  (play sessions leave `mat_PlayerBody.mat` byte-identical; MT-SMOKE-01 re-run GREEN
+  13/0/1 + binding harness 17/17 renderers, asset 1→1) — P0.E3.T15 (Known Issues B.14)
 - Crosshair NRE when `PlayerController` absent (mouse + joystick lookups null-guarded) — P0.E2.T3
   (defect P0.E3.T9 code part)
 - 17 documentation defects from the QA review (details: `docs/review-report.md`)

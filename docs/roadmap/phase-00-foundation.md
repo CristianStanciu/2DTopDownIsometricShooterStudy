@@ -39,9 +39,9 @@
 - [~] **P0.E2.T6** — **Play-mode validation** on a clean checkout: run manual case `MT-SMOKE-01` (boot → Level_00 → move/dash/shoot/weapon-swap → pause → quit); record in `docs/qa/smoke.md` *(automated subset GREEN 2026-10-06 on fresh clone @`74b6552`: PASS=13 / FAIL=0 / WARN=1 editor-internal, exit 0 — full record in `docs/qa/smoke.md`; pending manual: gamepad, audio, wall-façade observation, interactive quit)*
 - [ ] **P0.E2.T7** — Confirm deterministic package restore from committed `packages-lock.json`; CI uses locked mode
 
-## Epic P0.E3 — Defect burn-down (13 verified defects, ~3 pw)
+## Epic P0.E3 — Defect burn-down (14 verified defects, ~3 pw)
 
-*Source: `docs/essential/known-issues-and-roadmap.md` §B. One task per defect + regression proof.*
+*Source: `docs/essential/known-issues-and-roadmap.md` §B. One task per defect + regression proof. (B.14 was appended to §B after it was found by P0.E2.T6 → task T15.)*
 
 - [~] **P0.E3.T1** — `WeaponHandler.CheckWeaponsAvailability()`: make guards actually protect callers (null-safe early abort + callers check result) so `weapons[i]`/`currentWeapon` can never NRE *(code done: returns bool, all 3 callers abort on false; batchmode compile 0 warn/0 error — `724250d`; test pending P0.E7)*
   - [ ] EditMode test: handler with empty/destroyed weapon list doesn't throw; callers skip fire *(blocked on P0.E7 test asmdefs)*
@@ -63,6 +63,7 @@
 - [x] **P0.E3.T12** — Remove leftover empty-path entry from `EditorBuildSettings.asset` *(disabled entry + zero GUID dropped; Level_00 stays the only scene; commit `aabde53`)*
 - [x] **P0.E3.T13** — `EnvironmentObjectTrigger.SetActiveObjects()`: null-guard the arrays themselves *(each of the 4 loops wrapped in its array guard; committed with T7 in `acf3aab` — shared file kept one commit so every tree stays compilable)*
 - [ ] **P0.E3.T14** — Triage retro: every fix referenced in CHANGELOG; full smoke `MT-SMOKE-01` re-run green
+- [x] **P0.E3.T15** — Known Issues **B.14** — `PlayerMaterials`: dash highlight wrote `_ColorIntensity` directly on the shared `mat_PlayerBody.mat` **asset** (play sessions dirtied the asset; found by P0.E2.T6). Rewrite to per-renderer `MaterialPropertyBlock`s bound in `Awake()` (`FindObjectsByType<Renderer>` matching `bodyMaterial`, inactive parts included) — no scene rewiring, public API unchanged *(MT-SMOKE-01 re-run GREEN PASS=13/FAIL=0/WARN=1 with dash at frame 50; post-run `git status` byte-clean on the mat; binding harness 17/17 renderers + asset `_ColorIntensity` 1→1; 0 CS diagnostics; fresh clone @`b36b61e`+fix — 2026-10-06)*
 
 ## Epic P0.E4 — Architecture refactor (~5 pw) — *unblocks P1/P2/P3*
 
