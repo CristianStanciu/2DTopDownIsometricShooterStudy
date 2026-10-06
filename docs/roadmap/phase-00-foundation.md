@@ -23,7 +23,7 @@
   - [ ] Branch protection requires 1 green CI run before merge
   - *Files shipped (PR template, CODEOWNERS, CONTRIBUTING); branch protection pending `gh auth login` (token invalid) + P0.E6.T1 CI.*
 - [x] **P0.E1.T4** — Pin editor version org-wide: document `6000.3.20f1` in `getting-started.md`; rule: upgrades only via dedicated PR with full regression run
-- [ ] **P0.E1.T5** — Add `CHANGELOG.md` (Keep a Changelog format); every merged PR adds an entry; this becomes launch patch notes
+- [x] **P0.E1.T5** — Add `CHANGELOG.md` (Keep a Changelog format); every merged PR adds an entry; this becomes launch patch notes
 - [ ] **P0.E1.T6** — Versioning scheme: `0.x` internal, `0.9` RC, `1.0` release; wire to `PlayerSettings.bundleVersion` (currently `0.1`) and CI build naming
 
 ## Epic P0.E2 — Unity 6.3 hardening (~3 pw)
