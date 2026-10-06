@@ -42,6 +42,8 @@ public class GUIHandler : MonoBehaviour
         ("RTrigger", "Action1"),
         ("LTrigger", "Action2"),
         ("A/B", "SwitchWeapon"),
+        ("X", "Weapon0"),
+        ("Y", "Weapon1"),
         ("LStickButton", "SwitchFireRate"),
         ("Start", "Pause")
     };

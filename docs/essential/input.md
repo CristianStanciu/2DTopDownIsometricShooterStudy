@@ -10,15 +10,16 @@ The project uses Unity's **legacy Input Manager** (`UnityEngine.Input`) — ther
 **static API** (`TadaInput.GetKey(...)`, `TadaInput.MoveAxisRawInput`, …), mirroring Unity's own
 `Input.GetKey` ergonomics.
 
-`TadaInput` is a root GameObject in **both scenes** (must exist exactly once; statics are never
-reset between play sessions — see [Known Issues](known-issues-and-roadmap.md)).
+`TadaInput` is a root GameObject in **both scenes** (must exist exactly once). Its static state is
+cleared before every play session by `ResetStaticState()` (a `[RuntimeInitializeOnLoadMethod]`,
+P0.E3.T8), so `GetKeyDown` state can't leak across sessions.
 
 ## The `ThisKey` enum
 
 ```csharp
 None, MoveLeft, MoveRight, MoveUp, MoveDown, PrimaryAction, SecondaryAction,
 PreviousWeapon, NextWeapon, PreviousUseRate, NextUseRate, Xbox360RightTrigger,
-Xbox360LeftTrigger, MouseAnyMovement, Dash, Pause, Count
+Xbox360LeftTrigger, MouseAnyMovement, Dash, Pause, WeaponSlot1, WeaponSlot2, Count
 ```
 
 State is stored in four arrays sized `Count + 1`: `currentKeys` (held), `currentKeysDown`,
@@ -28,7 +29,7 @@ State is stored in four arrays sized `Count + 1`: `currentKeys` (held), `current
 - `GetKeyDown(key)` / `GetKeyUp(key)` — true for **one poll then cleared** (consuming: the slot is
   reset to `None` on read).
 - Axes can be converted into virtual keys via `StoreCurrentAxisAsKeyType`: value `> 0` → down+held,
-  `== 0` → up. Used for the analog triggers.
+  `== 0` → up. Used for the analog triggers and `MouseAnyMovement` (any mouse motion → key held).
 
 ## Key bindings (as implemented in `TadaInput.Update()`)
 
@@ -42,7 +43,7 @@ State is stored in four arrays sized `Count + 1`: `currentKeys` (held), `current
 | Previous / Next weapon | `Q` / `E`; mouse **scroll wheel** also maps to Previous/Next | `Joystick1Button0` (A) / `Joystick1Button1` (B) |
 | Previous / Next fire rate | `C` / `V` | `Joystick1Button9` (L3) for Next only |
 | Pause | `Escape` | `Joystick1Button7` (Start) |
-| Weapon slot 0 / 1 | `Alpha1` / `Alpha2` — **read directly via `Input.GetKeyDown` in `PlayerController`, bypassing TadaInput** | — |
+| Weapon slot 0 / 1 | `Alpha1` / `Alpha2` → `WeaponSlot1`/`WeaponSlot2` (via `TadaInput`, P0.E3.T4) | `Joystick1Button2` (X) / `Joystick1Button3` (Y) → `WeaponSlot1`/`WeaponSlot2` |
 
 The scroll wheel has special handling (`isScrollWheelActive`) so one wheel movement emits a single
 `KeyDown` instead of continuous `KeyUp` spam (`// TODO: Improve mouseScrollDelta input conditions`).
@@ -90,13 +91,13 @@ switching keyboard vs gamepad text based on `TadaInput.IsMouseActive`. See
 
 ## Known issues (input)
 
-- Direct `Input.GetKeyDown(KeyCode.Alpha1/2)` in `PlayerController` bypasses the abstraction.
-- Static state never cleared on play-mode exit → `GetKeyDown` can leak across sessions.
 - Trigger axis mapping assumes Xbox-style `0…1` positive axes (axis-as-key only tests `> 0` / `== 0`;
   a `-1…1` trigger would never release the key).
-- `MouseAnyMovement` exists in the enum but is never stored (dead member).
-- Duplicate `StoreCurrentKeyUp(ThisKey.NextUseRate)` block for `V` (harmless redundancy).
 - Full list: [Known Issues & Roadmap Foundation](known-issues-and-roadmap.md).
+
+**Resolved in P0.E3:** direct `Alpha1/2` reads bypassing `TadaInput` (→ `WeaponSlot1/2`, T4);
+static state leaking across play sessions (`ResetStaticState`, T8); dead `MouseAnyMovement` enum
+member (now stored with axis semantics, T8); duplicate `KeyUp(NextUseRate)` block for `V` (T8).
 
 ## Related pages
 

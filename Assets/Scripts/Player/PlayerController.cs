@@ -95,11 +95,11 @@ public class PlayerController : MonoBehaviour
         #region ---------------------------- WEAPON SWITCH
 
         // Weapon: Switch weapon to index 0
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (TadaInput.GetKeyDown(TadaInput.ThisKey.WeaponSlot1))
             _WeaponHandler.SwitchWeapon(WeaponHandler.WeaponSwitchMode.ByIndex, 0);
 
         // Weapon: Switch weapon to index 1
-        if (Input.GetKeyDown(KeyCode.Alpha2))
+        if (TadaInput.GetKeyDown(TadaInput.ThisKey.WeaponSlot2))
             _WeaponHandler.SwitchWeapon(WeaponHandler.WeaponSwitchMode.ByIndex, 1);
 
         // Weapon: Switch to next weapon

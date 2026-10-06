@@ -85,14 +85,12 @@ Player
 
 ## Known gaps (player)
 
-- `PlayerSkills.SetActiveTrails` null-checks the *array* inside the loop instead of the element
-  (`dashTrails != null` vs `dashTrails[i] != null`) — a null entry would throw.
-- `PlayerPhysics.OnTriggerExit2D` is an empty stub.
 - Dash availability is hard-wired `true` (`canDash = true` in `Awake`) with a comment saying it
   "should be handled by other behaviour that grants the ability after completing a task".
-- `PlayerController` reads `Input.GetKeyDown(KeyCode.Alpha1/2)` **directly**, bypassing `TadaInput`
-  (inconsistent with everything else).
-- Body/aim logic depends on `FindObjectOfType<PlayerShoulderSecondary>()` at startup.
+- Body/aim logic depends on `FindFirstObjectByType<PlayerShoulderSecondary>()` at startup.
+
+*(Resolved in P0.E3: `SetActiveTrails` element null-check (T2), `OnTriggerExit2D` façade restore
+(T7), weapon slots 1/2 routed through `TadaInput` (T4).)*
 
 Full defect list: [Known Issues & Roadmap Foundation](known-issues-and-roadmap.md).
 

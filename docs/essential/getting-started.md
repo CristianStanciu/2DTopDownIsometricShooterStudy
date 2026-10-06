@@ -30,18 +30,18 @@
 **Keyboard + mouse**
 
 ```
-WASD: Move | Mouse: Aim | Space: Dash | 1: Weapon0 | 2: Weapon2
+WASD: Move | Mouse: Aim | Space: Dash | 1: Weapon0 | 2: Weapon1
 LMB: Act1 | RMB: Act2 | Q/E: SwitchWpn | C/V: SwitchFireRate | Esc: Pause
 ```
 
-*(Note: the overlay text says "2: Weapon2" but the code maps key `2` to weapon index 1; also
-weapon switching works with Q/E and the mouse scroll wheel.)*
+*(Note: key `2` selects weapon **index 1**; weapon switching also works with Q/E and the mouse
+scroll wheel.)*
 
 **Gamepad (Xbox layout, joystick #1)**
 
 ```
 LStick: Move | RStick: Aim | RB: Dash | RTrigger: Action1 | LTrigger: Action2
-A/B: SwitchWeapon | LStickButton: SwitchFireRate | Start: Pause
+A/B: SwitchWeapon | X: Weapon0 | Y: Weapon1 | LStickButton: SwitchFireRate | Start: Pause
 ```
 
 Exact key mapping lives in `Assets/Scripts/Inputs/TadaInput.cs` — see [Input System](input.md).

@@ -54,7 +54,7 @@ public class TadaInput : MonoBehaviour
     { 
         None, MoveLeft, MoveRight, MoveUp, MoveDown, PrimaryAction, SecondaryAction,
         PreviousWeapon, NextWeapon, PreviousUseRate, NextUseRate, Xbox360RightTrigger,
-        Xbox360LeftTrigger, MouseAnyMovement, Dash, Pause, Count
+        Xbox360LeftTrigger, MouseAnyMovement, Dash, Pause, WeaponSlot1, WeaponSlot2, Count
     }
     private static ThisKey[] currentKeys;
     private static ThisKey[] currentKeysDown;
@@ -120,6 +120,11 @@ public class TadaInput : MonoBehaviour
         _MousePixelPos.z = 20f;
         _MouseWorldPos = cam.ScreenToWorldPoint(_MousePixelPos);
         _MouseWorldPos.z = 0f;
+
+        // Store any mouse movement as a virtual key (axis semantics: moving → down+held, idle → up)
+        // so MouseAnyMovement is queryable like every other key instead of staying a dead enum
+        // member (P0.E3.T8).
+        StoreCurrentAxisAsKeyType(ThisKey.MouseAnyMovement, _MouseInput.sqrMagnitude > 0 ? 1f : 0f);
 
         #endregion
 
@@ -215,6 +220,13 @@ public class TadaInput : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q) || Input.GetKeyDown(KeyCode.Joystick1Button0))
             StoreCurrentKeyDown(ThisKey.PreviousWeapon);
 
+        // Direct weapon slot selection (P0.E3.T4): Alpha1/Alpha2 on keyboard, X/Y on gamepad.
+        if (Input.GetKeyDown(KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Joystick1Button2))
+            StoreCurrentKeyDown(ThisKey.WeaponSlot1);
+
+        if (Input.GetKeyDown(KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Joystick1Button3))
+            StoreCurrentKeyDown(ThisKey.WeaponSlot2);
+
         if (Input.GetMouseButtonDown(0) || GetKeyDown(ThisKey.Xbox360RightTrigger))
             StoreCurrentKeyDown(ThisKey.PrimaryAction);
 
@@ -258,9 +270,6 @@ public class TadaInput : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.C))
             StoreCurrentKeyUp(ThisKey.PreviousUseRate);
 
-        if (Input.GetKeyUp(KeyCode.V))
-            StoreCurrentKeyUp(ThisKey.NextUseRate);
-
         if (Input.GetKeyUp(KeyCode.V) || Input.GetKeyUp(KeyCode.Joystick1Button9))
             StoreCurrentKeyUp(ThisKey.NextUseRate);
 
@@ -269,6 +278,12 @@ public class TadaInput : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.Q) || Input.GetKeyUp(KeyCode.Joystick1Button0))
             StoreCurrentKeyUp(ThisKey.PreviousWeapon);
+
+        if (Input.GetKeyUp(KeyCode.Alpha1) || Input.GetKeyUp(KeyCode.Joystick1Button2))
+            StoreCurrentKeyUp(ThisKey.WeaponSlot1);
+
+        if (Input.GetKeyUp(KeyCode.Alpha2) || Input.GetKeyUp(KeyCode.Joystick1Button3))
+            StoreCurrentKeyUp(ThisKey.WeaponSlot2);
 
         if (Input.GetMouseButtonUp(0) || GetKeyUp(ThisKey.Xbox360RightTrigger))
             StoreCurrentKeyUp(ThisKey.PrimaryAction);
@@ -290,6 +305,25 @@ public class TadaInput : MonoBehaviour
         #endregion
 
         #endregion
+    }
+
+    /// <summary>
+    /// Clears every static input state before each play session starts (and on app start). Runs via
+    /// RuntimeInitializeOnLoadMethod so no stale key state (e.g. an unconsumed GetKeyDown) can leak
+    /// across play sessions, even with domain reload disabled (P0.E3.T8).
+    /// </summary>
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetStaticState()
+    {
+        IsMouseActive = false;
+        MouseInput = Vector3.zero;
+        MousePixelPos = Vector3.zero;
+        MouseWorldPos = Vector3.zero;
+        MoveAxisSmoothInput = Vector2.zero;
+        MoveAxisRawInput = Vector2.zero;
+        AimAxisSmoothInput = Vector2.zero;
+        AimAxisRawInput = Vector2.zero;
+        InitializeInputArrays();
     }
 
     /// <summary>
