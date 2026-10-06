@@ -84,7 +84,7 @@
 
 ## Epic P0.E5 — Tooling & code quality (~2 pw)
 
-- [ ] **P0.E5.T1** — `.editorconfig` (Unity C# conventions: explicit types policy, file headers with ID refs, `this.` style per existing code) + formatter configured in CI
+- [~] **P0.E5.T1** — `.editorconfig` (Unity C# conventions: explicit types policy, file headers with ID refs, `this.` style per existing code) + formatter configured in CI *(config shipped: survey-based rules over all 48 scripts — explicit types (`var` banned; 0 usages), no `this.` (0 usages), Allman braces (349 vs 2), 4-space/CRLF/UTF-8-BOM (all 48 files BOM'd), camelCase private fields + PascalCase public, `[SerializeField] private` pattern, IDE0052 suppression preserved, naming rules as soft suggestions; file-header template staged commented (activation = dedicated churn PR with E5.T2 baseline); spec check 11/11 PASS — 2026-10-06; formatter-in-CI half deferred to E5.T2 + first green Actions run)*
 - [ ] **P0.E5.T2** — Roslyn/Unity analyzers enabled; warnings-as-errors in CI (local dev keeps soft warnings); baseline suppressions documented with reasons
 - [ ] **P0.E5.T3** — Structured logging shim: `Log.Info/Warn/Error(tag, msg, ctx)` wrapping `Debug.Log`, stripped/level-filtered in release builds; migrate the noisiest scripts first
 - [ ] **P0.E5.T4** — Scene validation editor test: both scenes load, zero missing scripts, `SceneContext` present, no duplicate singletons — runs in CI (extends census approach from `docs/essential/scenes.md`)

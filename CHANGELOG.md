@@ -43,6 +43,9 @@ Every merged PR adds an entry under `[Unreleased]` (rule: `CONTRIBUTING.md`).
 - E3 triage retro (P0.E3.T14): CHANGELOG audit — all 14 prior defect fixes referenced
   (T1–T13, T15); full MT-SMOKE-01 re-run GREEN @ `5fecd1b` (13/0/1, 0 tracked files
   modified post-run) — evidence in `docs/qa/smoke.md`
+- `.editorconfig` (P0.E5.T1): survey-based C# conventions for all 48 scripts — no `var`,
+  no `this.`, Allman braces, 4-space indent, UTF-8-BOM, naming suggestions, IDE0052
+  suppression kept; CI formatter enforcement deferred with P0.E5.T2
 
 ### Changed
 
