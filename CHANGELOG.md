@@ -35,8 +35,25 @@ Every merged PR adds an entry under `[Unreleased]` (rule: `CONTRIBUTING.md`).
   P0.E1.T1
 - `getting-started.md`: editor upgrade policy (dedicated PR + full regression) — P0.E1.T4
 
+### Removed
+
+- Dead class `Weapon_ChargeContinuousShooting` (WIP, empty `OnChargeShooting()`, zero scene/prefab
+  references) — decision: delete rather than implement; continuous beams get designed in P1 — P0.E3.T6
+
 ### Fixed
 
+- `WeaponHandler.CheckWeaponsAvailability()` returns a result and every caller aborts on failure
+  (empty/missing weapon lists can no longer NRE) — P0.E3.T1
+- `PlayerSkills.SetActiveTrails()` null-checks trail elements (array guarded once, before the loop)
+  — P0.E3.T2
+- `SoundManager` SFX methods guard the SFX emitter (`sfx`/`unstoppableSfx`), not `music` — P0.E3.T3
+- Wall façades restore when the player exits an environment trigger (`OnTriggerExit2D` mirrors enter
+  logic via `EnvironmentObjectTrigger.RestoreObjects()` / `EnvironmentObject.RestoreStartSet()`) — P0.E3.T7
+- Camera follow smoothing uses `Time.fixedDeltaTime` → frame-rate-independent convergence — P0.E3.T10
+- Debug overlay hints generated from binding tables; `2: Weapon2` corrected to `2: Weapon1` (key 2
+  selects weapon index 1) — P0.E3.T11
+- Leftover empty-path scene entry removed from `EditorBuildSettings.asset` — P0.E3.T12
+- `EnvironmentObjectTrigger.SetActiveObjects()` null-guards the arrays themselves — P0.E3.T13
 - Crosshair NRE when `PlayerController` absent (mouse + joystick lookups null-guarded) — P0.E2.T3
   (defect P0.E3.T9 code part)
 - 17 documentation defects from the QA review (details: `docs/review-report.md`)

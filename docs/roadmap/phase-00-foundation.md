@@ -43,24 +43,24 @@
 
 *Source: `docs/essential/known-issues-and-roadmap.md` §B. One task per defect + regression proof.*
 
-- [ ] **P0.E3.T1** — `WeaponHandler.CheckWeaponsAvailability()`: make guards actually protect callers (null-safe early abort + callers check result) so `weapons[i]`/`currentWeapon` can never NRE
-  - [ ] EditMode test: handler with empty/destroyed weapon list doesn't throw; callers skip fire
-- [ ] **P0.E3.T2** — `PlayerSkills.SetActiveTrails()`: null-check `dashTrails[i]`, not the array
-- [ ] **P0.E3.T3** — `SoundManager.SFX_PlayOneShot/SFX_PlayDelayedOneShot`: guard on `sfx != null` (currently checks `music`)
-  - [ ] Test: music-only SoundManager doesn't break SFX calls
+- [~] **P0.E3.T1** — `WeaponHandler.CheckWeaponsAvailability()`: make guards actually protect callers (null-safe early abort + callers check result) so `weapons[i]`/`currentWeapon` can never NRE *(code done: returns bool, all 3 callers abort on false; batchmode compile 0 warn/0 error — `724250d`; test pending P0.E7)*
+  - [ ] EditMode test: handler with empty/destroyed weapon list doesn't throw; callers skip fire *(blocked on P0.E7 test asmdefs)*
+- [x] **P0.E3.T2** — `PlayerSkills.SetActiveTrails()`: null-check `dashTrails[i]`, not the array *(array guarded once before the loop; commit `9aaee2a`, compile-verified)*
+- [~] **P0.E3.T3** — `SoundManager.SFX_PlayOneShot/SFX_PlayDelayedOneShot`: guard on `sfx != null` (currently checks `music`) *(code done: guards the resolved emitter (`sfx`/`unstoppableSfx`); commit `cc51c5d`; test pending P0.E7)*
+  - [ ] Test: music-only SoundManager doesn't break SFX calls *(blocked on P0.E7 test asmdefs)*
 - [ ] **P0.E3.T4** — `PlayerController`: replace direct `Input.GetKeyDown(KeyCode.Alpha1/Alpha2)` with `TadaInput` so slot switching works on gamepad and honours the abstraction
 - [ ] **P0.E3.T5** — `Weapon_ShootProjectileCanCharge`: implement charge-shake cooldown (author NOTE); window configurable in tuning SO (P0.E4.T6)
-- [ ] **P0.E3.T6** — Remove dead class `Weapon_ChargeContinuousShooting` (empty `OnChargeShooting()`) or implement it; record decision
-- [ ] **P0.E3.T7** — `PlayerPhysics.OnTriggerExit2D()`: restore wall façades on exit (mirror enter logic)
-  - [ ] Test: enter → exit sequence restores sprite colors without requiring a second enter
+- [x] **P0.E3.T6** — Remove dead class `Weapon_ChargeContinuousShooting` (empty `OnChargeShooting()`) or implement it; record decision *(decision: remove — zero scene/prefab/asset GUID refs; −191 lines; recorded in CHANGELOG + `weapons-and-projectiles.md`; commit `fdc6c90`)*
+- [~] **P0.E3.T7** — `PlayerPhysics.OnTriggerExit2D()`: restore wall façades on exit (mirror enter logic) *(code done: exit mirrors enter via `RestoreObjects()`/`RestoreStartSet()`; enter also null-guards `TryGetComponent`; commit `acf3aab`; test pending P0.E7)*
+  - [ ] Test: enter → exit sequence restores sprite colors without requiring a second enter *(blocked on P0.E7 PlayMode infra; manual observation folds into P0.E2.T6 smoke)*
 - [ ] **P0.E3.T8** — `TadaInput`: remove duplicated `StoreCurrentKeyUp(NextUseRate)` block; reset statics on play-stop; store `MouseAnyMovement`; EditMode tests for consumption + `NextUseRate` timing
 - [ ] **P0.E3.T9** — Close crosshair NRE risk (same code as P0.E2.T3)
   - [ ] Test: crosshair ticks without player in scene, logs warning instead of throwing
-- [ ] **P0.E3.T10** — `CameraBehaviour.FixedUpdate`: use `Time.fixedDeltaTime` for smoothing
-  - [ ] Behaviour converges identically in 30/60/144 fps checks (sim or documented A/B)
-- [ ] **P0.E3.T11** — `GUIHandler` overlay: fix `2: Weapon2` mapping text; generate text from binding table so it can't drift (input for P3 localization)
-- [ ] **P0.E3.T12** — Remove leftover empty-path entry from `EditorBuildSettings.asset`
-- [ ] **P0.E3.T13** — `EnvironmentObjectTrigger.SetActiveObjects()`: null-guard the arrays themselves
+- [x] **P0.E3.T10** — `CameraBehaviour.FixedUpdate`: use `Time.fixedDeltaTime` for smoothing *(commit `e9f1ef2`)*
+  - [x] Behaviour converges identically in 30/60/144 fps checks (sim or documented A/B) *(documented A/B: old factor per FixedUpdate step = frame `deltaTime`×FollowSpeed → 0.066/0.033/0.014 at 30/60/144 fps; new = constant `fixedDeltaTime`×FollowSpeed = 0.06/step with fixed 50 steps/s → frame-rate independent)*
+- [x] **P0.E3.T11** — `GUIHandler` overlay: fix `2: Weapon2` mapping text; generate text from binding table so it can't drift (input for P3 localization) *(labels now rendered from `MouseBindings`/`GamepadBindings` tables via `FormatBindings`; `2: Weapon1` corrects Alpha2→index 1; commit `532cc11`)*
+- [x] **P0.E3.T12** — Remove leftover empty-path entry from `EditorBuildSettings.asset` *(disabled entry + zero GUID dropped; Level_00 stays the only scene; commit `aabde53`)*
+- [x] **P0.E3.T13** — `EnvironmentObjectTrigger.SetActiveObjects()`: null-guard the arrays themselves *(each of the 4 loops wrapped in its array guard; committed with T7 in `acf3aab` — shared file kept one commit so every tree stays compilable)*
 - [ ] **P0.E3.T14** — Triage retro: every fix referenced in CHANGELOG; full smoke `MT-SMOKE-01` re-run green
 
 ## Epic P0.E4 — Architecture refactor (~5 pw) — *unblocks P1/P2/P3*
