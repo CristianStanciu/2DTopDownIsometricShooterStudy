@@ -25,7 +25,7 @@
 | `Physics/` | `Physics2DHandler` | Rigidbody2D base class (`SetVelocity`, `AddForce`, `CanMove`). |
 | `Player/` | 9 classes | Player composition — see [Player System](player.md). |
 | `Utilities/` | `Singleton<T>`, `ArraysHandler`, `LookAt2Dv2` + `Handler` + `Updater` | Singleton pattern, circular array indexing, 2D aim-rotation system. |
-| `Weapons/` | `Weapon`, `WeaponHandler`, `Projectile`, `Weapon_ShootProjectileCanCharge`, `Weapon_ChargeContinuousShooting`, `WeaponAnim_ShootProjectileCanCharge` | Weapon framework — see [Weapons & Projectiles](weapons-and-projectiles.md). |
+| `Weapons/` | `Weapon`, `WeaponHandler`, `Projectile`, `Weapon_ShootProjectileCanCharge`, `WeaponAnim_ShootProjectileCanCharge` | Weapon framework — see [Weapons & Projectiles](weapons-and-projectiles.md). |
 | `_NOTES/` | `JustNotes` | Author's scratchpad MonoBehaviour (harmless, can be ignored/removed). |
 
 ## Inheritance map
@@ -38,8 +38,7 @@ MonoBehaviour
 │   ├── PlayerAnimations
 │   └── WeaponAnim_ShootProjectileCanCharge
 ├── Weapon                           (Assets/Scripts/Weapons)
-│   ├── Weapon_ShootProjectileCanCharge      ← both scene weapons use this
-│   └── Weapon_ChargeContinuousShooting      ← WIP/empty (OnChargeShooting not implemented)
+│   └── Weapon_ShootProjectileCanCharge      ← both scene weapons use this
 ├── Crosshair                        (Assets/Scripts/Crosshair)
 │   ├── CrosshairMouse
 │   └── CrosshairJoystick

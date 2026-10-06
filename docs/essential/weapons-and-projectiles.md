@@ -11,7 +11,6 @@ The weapon framework lives in `Assets/Scripts/Weapons/`:
 | `Weapon` | `MonoBehaviour` | Base class: use-rate cooldown + virtual action hooks. |
 | `WeaponHandler` | `MonoBehaviour` | Bridge between player and weapons (on the Player GameObject). |
 | `Weapon_ShootProjectileCanCharge` | `Weapon` | The only implemented weapon behaviour (×2 in scenes). |
-| `Weapon_ChargeContinuousShooting` | `Weapon` | **WIP stub** — `OnChargeShooting()` override is empty. |
 | `WeaponAnim_ShootProjectileCanCharge` | `AnimationHandler` | Weapon sprite animations (Idle/BasicShot/Charging/ChargedShot). |
 | `Projectile` | `MonoBehaviour` | Travelling bullet: Translate movement + wall-only trigger collision. |
 
@@ -113,7 +112,8 @@ are instantiated at runtime by `SpawnProjectiles()`. See [Scene Inventory](scene
 
 ## Known gaps (weapons)
 
-- `Weapon_ChargeContinuousShooting.OnChargeShooting()` is an empty override (dead code path).
+- `Weapon_ChargeContinuousShooting` removed (P0.E3.T6): empty `OnChargeShooting()`, zero scene/prefab
+  references — decision: delete rather than implement; continuous-beam weapons get designed in P1.
 - No reload, spread, ammo, damage, enemies, or hit feedback beyond particle + sound.
 - `CheckWeaponsAvailability` doesn't actually abort (see [Known Issues](known-issues-and-roadmap.md)).
 - Charge/shoot camera-shake override (author's own NOTE).
