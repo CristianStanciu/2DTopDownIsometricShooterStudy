@@ -33,12 +33,17 @@ public class CrosshairMouse : Crosshair
     protected override void Awake()
     {
         base.Awake();
-        player = FindObjectOfType<PlayerController>().transform;
+        player = FindAnyObjectByType<PlayerController>()?.transform;
     }
 
     public override void UpdateCrosshair()
     {
         base.UpdateCrosshair();
+
+        // P0.E2.T3: player may be absent (defect P0.E3.T9) — tick without NRE.
+        if (player == null)
+            return;
+
         crosshair.transform.position = TadaInput.MouseWorldPos;
 
         _AimDirection = (crosshair.transform.position - player.position).normalized;

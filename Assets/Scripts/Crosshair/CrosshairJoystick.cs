@@ -52,8 +52,8 @@ public class CrosshairJoystick : Crosshair
     protected override void Awake()
     {
         base.Awake();
-        player = FindObjectOfType<PlayerController>().transform;
-        pointToFollow = FindObjectOfType<PlayerShoulderMain>().transform;
+        player = FindAnyObjectByType<PlayerController>()?.transform;
+        pointToFollow = FindAnyObjectByType<PlayerShoulderMain>()?.transform;
     }
 
     public override void UpdateCrosshair()
@@ -66,6 +66,10 @@ public class CrosshairJoystick : Crosshair
                 return;
             isReady = true;
         }
+
+        // P0.E2.T3: player may be absent (defect P0.E3.T9) — tick without NRE.
+        if (player == null)
+            return;
 
         // Multiply by AimAxis to create a vector that points towards that AimAxis Direction.
         upwardAxis = Quaternion.Euler(0, 0, 90) * TadaInput.AimAxisSmoothInput;
