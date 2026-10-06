@@ -11,8 +11,6 @@
  * 
  * -> v0.2 TotalWorkTime: 37h.
 
- * - Change transform.Find to FindObjectOfType<T>()
-
  * - Check all the naming of my methods to see if I can improve them.
 
  * - Look for the best option to control pause for all the classes.

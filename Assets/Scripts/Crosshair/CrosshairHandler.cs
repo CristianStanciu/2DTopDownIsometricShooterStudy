@@ -23,8 +23,8 @@ public class CrosshairHandler : MonoBehaviour
 
     private void Awake()
     {
-        mouseCrosshair = FindObjectOfType<CrosshairMouse>();
-        joystickCrosshair = FindObjectOfType<CrosshairJoystick>();
+        mouseCrosshair = FindFirstObjectByType<CrosshairMouse>();
+        joystickCrosshair = FindFirstObjectByType<CrosshairJoystick>();
     }
 
     private void Update()

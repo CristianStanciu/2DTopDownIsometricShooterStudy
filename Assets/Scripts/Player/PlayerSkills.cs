@@ -17,7 +17,7 @@ public class PlayerSkills : MonoBehaviour
 
     private void Awake()
     {
-        _AfterImageHandler = FindObjectOfType<AfterImageHandler>();
+        _AfterImageHandler = FindFirstObjectByType<AfterImageHandler>();
         TryGetComponent(out _PlayerPhysics);
         TryGetComponent(out _PlayerMaterials);
 

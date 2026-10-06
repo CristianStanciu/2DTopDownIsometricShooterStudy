@@ -33,7 +33,7 @@ public class AfterImageGenerator : MonoBehaviour
 
     private void Awake()
     {
-        _AfterImageMaterials = FindObjectOfType<AfterImageMaterials>();
+        _AfterImageMaterials = FindFirstObjectByType<AfterImageMaterials>();
         TryGetComponent(out _SpriteRenderer);
         CreateAfterImages();
     }

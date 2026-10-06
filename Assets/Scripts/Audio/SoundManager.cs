@@ -34,19 +34,19 @@ public class SoundManager : Singleton<SoundManager>
 
         // if there are no SoundEmitters, create them.
 
-        if (!FindObjectOfType<SoundFXEmitter>())
+        if (!FindFirstObjectByType<SoundFXEmitter>())
         {
             sfx = new GameObject("SoundFXs").AddComponent<SoundEmitter>();
             sfx.transform.SetParent(transform);
         }
 
-        if (!FindObjectOfType<UnstoppableSoundEmitter>())
+        if (!FindFirstObjectByType<UnstoppableSoundEmitter>())
         {
             unstoppableSfx = new GameObject("UnstoppableSoundFXs").AddComponent<UnstoppableSoundEmitter>();
             unstoppableSfx.transform.SetParent(transform);
         }
 
-        if (!FindObjectOfType<MusicEmitter>())
+        if (!FindFirstObjectByType<MusicEmitter>())
         {
             music = new GameObject("Music").AddComponent<MusicEmitter>();
             music.transform.SetParent(transform);

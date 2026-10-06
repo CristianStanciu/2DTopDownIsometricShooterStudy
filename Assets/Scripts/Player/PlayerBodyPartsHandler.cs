@@ -47,7 +47,7 @@ public class PlayerBodyPartsHandler : MonoBehaviour
         isRightDirection = true;
         TryGetComponent(out lookAtUpdater);
         TryGetComponent(out lookAtHandler);
-        shoulderSecondary = FindObjectOfType<PlayerShoulderSecondary>();
+        shoulderSecondary = FindFirstObjectByType<PlayerShoulderSecondary>();
     }
 
     private void Update()

@@ -11,7 +11,7 @@ public class AfterImageGroup : MonoBehaviour
 
     private void Awake()
     {
-        _AfterImageHandler = FindObjectOfType<AfterImageHandler>();
+        _AfterImageHandler = FindFirstObjectByType<AfterImageHandler>();
         _AfterImageHandler.AddAfterImageGroup(this);
     }
 
