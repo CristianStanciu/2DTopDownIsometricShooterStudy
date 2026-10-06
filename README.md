@@ -1,5 +1,5 @@
 ﻿# 2D Isometric Shooter Study by Tadadosi v0.2
-#### Game prototype with a sci-fi vibe made with Unity 2019.4.0f1
+#### Game prototype with a sci-fi vibe — upgraded to Unity 6000.3.20f1 (originally 2019.4.0f1)
 
 ![Big 25mb Gameplay Animated GIF](https://github.com/tadadosii/ImageStorage/blob/master/Isometric_Shooter_Study_v0.2_Gameplay.gif)
 
@@ -15,6 +15,7 @@ And is also my great effort to provide new devs with a really well thought game 
 - [Features](#features)
 - [What will you get?](#whatyouget)
 - [Installation](#installation)
+- [Documentation & controls](#docscontrols)
 - [How does it works?](#howdoesitwork)
   - [Animations](#animations)
   - [Audio](#audio)
@@ -78,10 +79,36 @@ And is also my great effort to provide new devs with a really well thought game 
 ---
 
 ### How do you use this repo? <a name="installation"></a> ([ToC↑](#home))
-- This was made using Unity 2019.4.0f1, so I recommend using that version to avoid any possible issue, it's up to you to decide.
+- **Engine: Unity 6000.3.20f1 (pinned).** The project was originally made with Unity 2019.4.0f1 and
+  has been upgraded to 6000.3.20f1 (commit `c9d5f0e`, scenes re-serialized as part of the upgrade).
+  Opening it with any other editor version risks merge noise — see the upgrade policy in
+  [`docs/essential/getting-started.md`](docs/essential/getting-started.md).
 - Use this link to clone the repo: https://github.com/tadadosii/2DTopDownIsometricShooterStudy.git (I use <a href="https://www.sourcetreeapp.com/" target="_blank">Sourcetree</a> to control my repos)
 - You can alternatively click the green button **Clone or download** to get the link or download a zip file with all the content.
 - Or simply <a href="https://github.com/tadadosii/2DTopDownIsometricShooterStudy/archive/master.zip">click here</a> to download the zip file.
+
+---
+
+### Documentation & controls <a name="docscontrols"></a> ([ToC↑](#home))
+
+This repository carries full project documentation:
+
+- [`docs/essential/`](docs/essential/index.md) — current-state docs: getting started, architecture,
+  scenes, player, weapons & projectiles, input, audio, camera & crosshair, rendering, known issues.
+- [`docs/roadmap/`](docs/roadmap/README.md) — approved development roadmap (v1.2), prototype → 1.0.
+- [`CHANGELOG.md`](CHANGELOG.md) · [`CONTRIBUTING.md`](CONTRIBUTING.md) — change history and contribution flow.
+
+**Controls (summary — full table in [`docs/essential/getting-started.md`](docs/essential/getting-started.md)):**
+
+| Action | Keyboard + mouse | Gamepad (Xbox layout) |
+|---|---|---|
+| Move | WASD | Left stick |
+| Aim | Mouse | Right stick |
+| Dash | Space | RB |
+| Fire / alt-fire | LMB / RMB | RT / LT |
+| Switch weapon | Q/E, 1/2, scroll | A/B |
+| Switch fire rate | C/V | L3 |
+| Pause | Esc | Start |
 
 ---
 
@@ -245,8 +272,8 @@ Here is the code:
   protected override void Awake()
   {
       base.Awake();
-      player = FindObjectOfType<PlayerController>().transform;
-      pointToFollow = FindObjectOfType<PlayerShoulderMain>().transform;
+      player = FindAnyObjectByType<PlayerController>()?.transform;
+      pointToFollow = FindAnyObjectByType<PlayerShoulderMain>()?.transform;
   }
 
   public override void UpdateCrosshair()

@@ -24,6 +24,10 @@ Every merged PR adds an entry under `[Unreleased]` (rule: `CONTRIBUTING.md`).
 
 ### Changed
 
+- Migrated 13 obsolete `FindObjectOfType` call sites (9 scripts) to `FindFirstObjectByType` —
+  zero CS0618 warnings on compile — P0.E2.T2
+- Root `README.md` refreshed: engine pin 6000.3.20f1 + upgrade story, documentation links,
+  controls table, code sample updated — P0.E2.T5
 - Project upgraded from Unity 2019.4.0f1 to **6000.3.20f1** (commit `c9d5f0e`), URP 17.3.0
 - `.gitignore` hardened: `UserSettings/` (8 files) and `my-game.slnx` untracked, `*.slnx` ignored —
   P0.E1.T1
@@ -31,4 +35,6 @@ Every merged PR adds an entry under `[Unreleased]` (rule: `CONTRIBUTING.md`).
 
 ### Fixed
 
+- Crosshair NRE when `PlayerController` absent (mouse + joystick lookups null-guarded) — P0.E2.T3
+  (defect P0.E3.T9 code part)
 - 17 documentation defects from the QA review (details: `docs/review-report.md`)

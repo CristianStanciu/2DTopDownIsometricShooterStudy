@@ -35,7 +35,7 @@
   - [x] Zero CS0618/obsolete warnings in console & CI log *(batchmode compile 2026-10-05: 0 warning/0 error/0 CS0618; re-check in CI at P0.E6.T1)*
 - [x] **P0.E2.T3** — Null-guard unguarded lookups (`CrosshairMouse`/`CrosshairJoystick` → `FindAnyObjectByType<PlayerController>()?.transform`) — closes defect P0.E3.T9
 - [ ] **P0.E2.T4** — **Warning-zero policy**: catalogue every warning class; fix or suppress-with-reason; CI fails on new `Warning CS|error CS` lines
-- [ ] **P0.E2.T5** — Refresh `README.md`: correct engine `6000.3.20f1`, upgrade story (2019.4 → 6000.3), link to `docs/essential/`, controls table
+- [x] **P0.E2.T5** — Refresh `README.md`: correct engine `6000.3.20f1`, upgrade story (2019.4 → 6000.3), link to `docs/essential/`, controls table
 - [ ] **P0.E2.T6** — **Play-mode validation** on a clean checkout: run manual case `MT-SMOKE-01` (boot → Level_00 → move/dash/shoot/weapon-swap → pause → quit); record in `docs/qa/smoke.md`
 - [ ] **P0.E2.T7** — Confirm deterministic package restore from committed `packages-lock.json`; CI uses locked mode
 
