@@ -90,4 +90,13 @@ public class EnvironmentObject : MonoBehaviour
     {
         objects = new GameObject[] { whenPlayerIsAbove, whenPlayerIsOnLeft, whenPlayerIsOnRight, whenPlayerIsBelow };
     }
+
+    /// <summary>
+    /// Restores the initial façade set (the inspector-configured <see cref="startsOnPlayerPosition"/>).
+    /// Used when the player leaves an environment trigger so walls don't wait for the next enter (P0.E3.T7).
+    /// </summary>
+    public void RestoreStartSet()
+    {
+        SetActiveObject(startsOnPlayerPosition);
+    }
 }

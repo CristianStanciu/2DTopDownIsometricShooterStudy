@@ -34,7 +34,8 @@ public class PlayerPhysics : Physics2DHandler
             if (collision.CompareTag("EnvironmentTrigger"))
             {
                 collision.TryGetComponent(out EnvironmentObjectTrigger trigger);
-                trigger.SetActiveObjects();
+                if (trigger != null)
+                    trigger.SetActiveObjects();
             }
         }
     }
@@ -43,7 +44,14 @@ public class PlayerPhysics : Physics2DHandler
     {
         if (collision != null)
         {
-
+            // P0.E3.T7: mirror the enter logic — restore the wall façades when the player
+            // leaves the trigger so they don't stay hidden until the next enter.
+            if (collision.CompareTag("EnvironmentTrigger"))
+            {
+                collision.TryGetComponent(out EnvironmentObjectTrigger trigger);
+                if (trigger != null)
+                    trigger.RestoreObjects();
+            }
         }
     }
 }
