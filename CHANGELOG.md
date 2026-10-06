@@ -4,6 +4,13 @@ All notable changes to this project are documented in this file.
 Format based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 Every merged PR adds an entry under `[Unreleased]` (rule: `CONTRIBUTING.md`).
 
+## Versioning (P0.E1.T6)
+
+- `0.x` — internal development; minor bump per phase milestone.
+- `0.9` — release candidate; `1.0` — first release.
+- `PlayerSettings.bundleVersion` is the source of truth (currently `0.1`, within `0.x` spec).
+- CI build artifacts are named `{version}-{sha}` (wired in P0.E6.T3 `build.yml`).
+
 ## [Unreleased]
 
 ### Added
