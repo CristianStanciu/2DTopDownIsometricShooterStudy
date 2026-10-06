@@ -48,6 +48,7 @@ public class CameraBehaviour : MonoBehaviour
             offset = Vector2.zero;
 
         Vector3 targetPosition = new Vector3(target.position.x + offset.x, target.position.y + offset.y, transform.position.z);
-        transform.position = Vector3.Lerp(transform.position, targetPosition, Time.deltaTime * _FollowSpeed);
+        // P0.E3.T10: fixedDeltaTime keeps the smoothing factor constant regardless of frame rate.
+        transform.position = Vector3.Lerp(transform.position, targetPosition, Time.fixedDeltaTime * _FollowSpeed);
     }
 }
