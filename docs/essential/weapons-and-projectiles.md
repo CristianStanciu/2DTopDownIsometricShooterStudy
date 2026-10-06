@@ -49,14 +49,18 @@ Serialized wiring: `basicProjectilePrefab`, `chargedProjectilePrefab`, `projecti
 (`WeaponAnim_ShootProjectileCanCharge`) resolved with `TryGetComponent`.
 
 State fields: `isReceivingInput` (secondary held), `isCharging`, `chargingTime`,
-`CHARGE_DURATION = 2f`.
+`CHARGE_DURATION = 2f`, plus the P0.E3.T5 charge re-use cooldown (`chargeReuseCooldown`,
+serialized 0.25 s default; `chargeReuseTimer` counts it down).
 
 ```
+Update():
+  chargeReuseTimer counts down while > 0 (charge re-use cooldown, P0.E3.T5)
+
 OnEnable() / OnCanUse()  → SpawnProjectiles(): lazily Instantiate both prefabs at the spawn
                            point (parented, SetActive(false)) — one instance reused per weapon;
                            plays Idle animation when the cooldown resets.
 
-Update() while isReceivingInput:
+Update() while isReceivingInput && chargeReuseTimer <= 0:
   first frame → OnChargingStart(): if !canUse → return (cooldown gates charging);
                anim → Charging; isCharging = true;
                CameraShake.Shake(duration: CHARGE_DURATION, shakeAmount: 0.065, decreaseFactor: 1);
@@ -64,6 +68,7 @@ Update() while isReceivingInput:
   every frame → chargingTime += deltaTime; OnCharging(t): PFX localScale = one * t (anticipation)
   t >= 2s    → OnChargingEnd(): anim → ChargedShot; isCharging = false; canUse = false;
                chargingTime = 0; CameraShake.Shake(0.2s, amount 1, decreaseFactor 3);
+               chargeReuseTimer = chargeReuseCooldown (blocks the next charge start);
                secondaryProjectile.SetActive(true); secondaryProjectile.Fire();
                secondaryProjectile = null; PFX reset+off
 
@@ -71,9 +76,11 @@ Update() when !isReceivingInput && isCharging → OnChargeCancel(): anim → Idl
                CameraShake.Shake(0, 0, 0) stops shake; chargingSFX.StopSound(); PFX reset+off
 ```
 
-Author's own `NOTE` in code: the charging shake *overrides* the release shake; fixing it needs a
-timer so the charge option can't be rapidly re-used. Listed under
-[Known Issues](known-issues-and-roadmap.md).
+Charge re-use cooldown (P0.E3.T5, resolves the author's own `NOTE`): `OnChargingEnd()` starts
+`chargeReuseTimer`; while it runs no new charge can start, so the weak charging shake can't
+override the release shake — even if the player keeps the secondary button held through the
+release. The window is serialized per weapon (`chargeReuseCooldown = 0.25 s`) and will move into
+the `GameTuning` SO with P0.E4.T6.
 
 Primary action calls `Fire()` on the primary projectile when `canUse` (rate-limited by the base
 cooldown). Both scene weapons use this same class — differences are Inspector data (prefabs, PFX,
@@ -115,8 +122,6 @@ are instantiated at runtime by `SpawnProjectiles()`. See [Scene Inventory](scene
 - `Weapon_ChargeContinuousShooting` removed (P0.E3.T6): empty `OnChargeShooting()`, zero scene/prefab
   references — decision: delete rather than implement; continuous-beam weapons get designed in P1.
 - No reload, spread, ammo, damage, enemies, or hit feedback beyond particle + sound.
-- `CheckWeaponsAvailability` doesn't actually abort (see [Known Issues](known-issues-and-roadmap.md)).
-- Charge/shoot camera-shake override (author's own NOTE).
 
 ## Related pages
 

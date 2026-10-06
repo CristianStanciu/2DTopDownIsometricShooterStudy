@@ -33,6 +33,13 @@ public class Weapon_ShootProjectileCanCharge : Weapon
     private bool isCharging = false;
     private float chargingTime;
 
+    // Charge re-use cooldown (author's NOTE, P0.E3.T5): after the charged shot is released
+    // (OnChargingEnd) no new charge may start until this window elapses, otherwise the weak
+    // charging shake would override the release shake. Serialized so each weapon can tune it in
+    // the Inspector; the central GameTuning SO (P0.E4.T6) will own this window later.
+    [SerializeField] private float chargeReuseCooldown = 0.25f;
+    private float chargeReuseTimer;
+
     private const float CHARGE_DURATION = 2f;
 
     protected override void Awake()
@@ -45,7 +52,14 @@ public class Weapon_ShootProjectileCanCharge : Weapon
     protected override void Update()
     {
         base.Update();
-        if (isReceivingInput)
+
+        // Count down the charge re-use cooldown started by OnChargingEnd.
+        if (chargeReuseTimer > 0f)
+            chargeReuseTimer -= Time.deltaTime;
+
+        // The charge re-use cooldown also gates the charging start, so a charge held/re-pressed
+        // right after the release can't restart the charging shake over the release shake.
+        if (isReceivingInput && chargeReuseTimer <= 0f)
         {
             // Execute the initial actions that take place in the first frame after isReceivingInput is set to true.
             OnChargingStart();
@@ -185,8 +199,8 @@ public class Weapon_ShootProjectileCanCharge : Weapon
             // We set it to true to avoid calling this method more than once.
             isCharging = true;
 
-            // NOTE: Weapon Charging Shake. Right now this shake behaviour will override the OnChargingEnd shake.
-            // In order to fix this I need to add timer to stop the charging option from being rapidly reused.
+            // Weak shake while charging. The charge re-use cooldown (started in OnChargingEnd)
+            // stops a rapid re-charge from overriding the release shake with this one (P0.E3.T5).
             CameraShake.Shake(duration: CHARGE_DURATION, shakeAmount: 0.065f, decreaseFactor: 1f);
 
             // Enable the charging visual effects.
@@ -226,6 +240,10 @@ public class Weapon_ShootProjectileCanCharge : Weapon
 
         // Make the camera Shake by a greater value.
         CameraShake.Shake(duration: 0.2f, shakeAmount: 1f, decreaseFactor: 3f);
+
+        // Start the charge re-use cooldown so the weak charging shake can't be restarted on top of
+        // this release shake (author's NOTE — fixed by P0.E3.T5).
+        chargeReuseTimer = chargeReuseCooldown;
 
         // Enable the projectile.
         secondaryProjectile.SetActive(true);
