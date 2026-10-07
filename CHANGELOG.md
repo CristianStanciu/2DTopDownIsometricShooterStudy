@@ -62,6 +62,12 @@ Every merged PR adds an entry under `[Unreleased]` (rule: `CONTRIBUTING.md`).
   all 64 `com.unity.*` packages, license-text links. LICENSE scope confirmed code-only per
   upstream README (recorded; `LICENSE` untouched); P3 credits requirement verified as already
   present (P3.E3.T1 + P3.E3.T7 reference `THIRD-PARTY.md`)
+- Contract templates + receipts workflow (P0.E8.T5): `docs/legal/templates/ip-assignment.md`
+  (present assignment / work-for-hire, warranties + indemnity, Background-Materials and AI-use
+  disclosure, §204(a) signature note) · `docs/legal/templates/license-receipt.md` (grant type,
+  commercial flag, attribution, proof, ledger/-Check/THIRD-PARTY update checklist) ·
+  `docs/legal/receipts/README.md` (`YYYY-MM-DD_slug.md` naming) — evidence trail for the
+  P8.E3.T4 final audit; templates are not-legal-advice pending counsel review at first use
 - `.editorconfig` (P0.E5.T1): survey-based C# conventions for all 48 scripts — no `var`,
   no `this.`, Allman braces, 4-space indent, UTF-8-BOM, naming suggestions, IDE0052
   suppression kept; CI formatter enforcement deferred with P0.E5.T2
