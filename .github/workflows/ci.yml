@@ -22,6 +22,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  # P0.E8.T1 — asset provenance gate: every audio/sprite/font file must be listed
+  # in docs/legal/asset-ledger.md with a matching Unity GUID (fails on drift, so
+  # new assets cannot ship without a license record).
+  asset-ledger:
+    name: Asset ledger check
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify asset ledger (P0.E8.T1)
+        run: pwsh -NoProfile -File scripts/get-asset-ledger.ps1 -Check
+
   editmode:
     name: EditMode tests
     runs-on: ubuntu-latest

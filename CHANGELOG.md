@@ -43,6 +43,13 @@ Every merged PR adds an entry under `[Unreleased]` (rule: `CONTRIBUTING.md`).
 - E3 triage retro (P0.E3.T14): CHANGELOG audit — all 14 prior defect fixes referenced
   (T1–T13, T15); full MT-SMOKE-01 re-run GREEN @ `5fecd1b` (13/0/1, 0 tracked files
   modified post-run) — evidence in `docs/qa/smoke.md`
+- Asset ledger + license drift gate (P0.E8.T1): `docs/legal/asset-ledger.md` — 11 audio +
+  9 sprite rows with Unity GUIDs, origin URLs (README credits), commercial-use flags and
+  attribution text; fonts = 0 proven; 64 `com.unity.*` packages (URP → shadergraph 17.3.0,
+  zero third-party UPM deps); third-party code table for E8.T4. `scripts/get-asset-ledger.ps1`
+  (`-Check` path/GUID drift gate) wired as CI job `asset-ledger`. **Findings: the NC music
+  and all pixel art (upstream: "free for personal use") are commercial blockers — feeds
+  E8.T2 brief scope (music + sprites) and P8.E3.T4 remediation**
 - `.editorconfig` (P0.E5.T1): survey-based C# conventions for all 48 scripts — no `var`,
   no `this.`, Allman braces, 4-space indent, UTF-8-BOM, naming suggestions, IDE0052
   suppression kept; CI formatter enforcement deferred with P0.E5.T2
