@@ -69,4 +69,20 @@ public class CameraShake : MonoBehaviour
 		shakeDuration = duration;
 		isActive = true;
 	}
+    /// <summary>
+    /// Clears shake state before each play session starts (and on app start). Runs via
+    /// RuntimeInitializeOnLoadMethod so an in-progress shake from a previous session can't leak
+    /// with domain reload disabled (P0.E4.T4, same lifecycle as TadaInput.ResetStaticState from
+    /// P0.E3.T8).
+    /// </summary>
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetStaticState()
+    {
+        _ShakeAmount = 0f;
+        _DecreaseFactor = 0f;
+        shakeDuration = 0f;
+        isActive = false;
+        defaultPosition = Vector3.zero;
+    }
+
 }

@@ -72,7 +72,7 @@ status, (B) verified defects & tech debt with file references, (C) capability ga
 | 5 | `Weapon_ShootProjectileCanCharge` | Author's NOTE: charging `CameraShake` overrides the release shake; needs a re-use cooldown timer. |
 | 6 | `Weapon_ChargeContinuousShooting.OnChargeShooting()` | Empty override — dead class still on disk. |
 | 7 | `PlayerPhysics.OnTriggerExit2D()` | Empty stub — wall façades never restore on exit, only on next enter. |
-| 8 | `TadaInput` | Duplicate `StoreCurrentKeyUp(NextUseRate)` block (lines ~261–265); statics never reset on play-stop (stale `GetKeyDown` can leak across sessions); `MouseAnyMovement` enum member never stored. |
+| 8 | `TadaInput` | Duplicate `StoreCurrentKeyUp(NextUseRate)` block (lines ~261–265); statics never reset on play-stop (stale `GetKeyDown` can leak across sessions); `MouseAnyMovement` enum member never stored. → **Fixed — P0.E3.T8 + P0.E4.T4**: duplicate removed, `MouseAnyMovement` stored, and every facade's statics now reset on subsystem registration (5× enter/exit verified — `docs/qa/static-reset.md`). |
 | 9 | `CrosshairMouse`/`CrosshairJoystick` | `FindObjectOfType<PlayerController>().transform` — unguarded, NRE if player absent. |
 | 10 | `CameraBehaviour.FixedUpdate` | Uses `Time.deltaTime` for Lerp smoothing inside `FixedUpdate` (frame-rate dependent). |
 | 11 | `GUIHandler` overlay text | Says `2: Weapon2` but key `2` maps to weapon **index 1** (cosmetic misinformation). |
@@ -87,8 +87,10 @@ status, (B) verified defects & tech debt with file references, (C) capability ga
 - **`FindObjectOfType` startup coupling** (13 sites, listed in A.2) — hidden dependencies that
   also generate Unity 6 warnings.
 - **Static facades everywhere** (`TadaInput`, `CameraShake`, `PauseController.isGamePaused`,
-  `CrosshairMouse/Joystick.AimDirection`, `PlayerBodyPartsHandler.isRightDirection`) — no reset
-  lifecycle, hard to unit-test.
+  `CrosshairMouse/Joystick.AimDirection`, `PlayerBodyPartsHandler.isRightDirection`) —
+  ~~no reset lifecycle~~ **reset lifecycle added (P0.E3.T8 + P0.E4.T4)**: every facade clears its
+  statics on subsystem registration (5× enter/exit verified — `docs/qa/static-reset.md`);
+  remaining debt: the coupling itself, hard to unit-test without injection.
 - **No assembly definitions** — everything recompiles in one assembly; slow iteration as the
   project grows; no way to isolate editor/test code.
 - **No tests** despite `com.unity.test-framework 1.6.0` in the manifest.

@@ -97,4 +97,16 @@ public class CrosshairJoystick : Crosshair
         // Smooth rotation.
         transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, TURN_RATE * Time.deltaTime);
     }
+    /// <summary>
+    /// Clears static crosshair state before each play session starts (and on app start) so a stale
+    /// position/direction can't be read before the first update with domain reload disabled
+    /// (P0.E4.T4, same lifecycle as TadaInput.ResetStaticState from P0.E3.T8).
+    /// </summary>
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetStaticState()
+    {
+        _CrosshairPosition = Vector3.zero;
+        _AimDirection = Vector3.zero;
+    }
+
 }

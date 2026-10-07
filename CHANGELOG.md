@@ -95,6 +95,12 @@ Every merged PR adds an entry under `[Unreleased]` (rule: `CONTRIBUTING.md`).
   `_ColorIntensity` through per-renderer `MaterialPropertyBlock`s bound in `Awake()`
   (play sessions leave `mat_PlayerBody.mat` byte-identical; MT-SMOKE-01 re-run GREEN
   13/0/1 + binding harness 17/17 renderers, asset 1→1) — P0.E3.T15 (Known Issues B.14)
+- Static-facade lifecycle: `CameraShake`, `PauseController`, `CrosshairMouse/Joystick`,
+  `PlayerBodyPartsHandler` reset their statics on subsystem registration
+  (`[RuntimeInitializeOnLoadMethod]`, same lifecycle as `TadaInput` in P0.E3.T8) —
+  pause/shake/aim/body-direction state can't leak across plays, even with domain reload
+  disabled; verified by a 5× enter/exit cycle run (GREEN PASS=50/FAIL=0 —
+  `docs/qa/static-reset.md`) — P0.E4.T4
 - Crosshair NRE when `PlayerController` absent (mouse + joystick lookups null-guarded) — P0.E2.T3
   (defect P0.E3.T9 code part)
 - 17 documentation defects from the QA review (details: `docs/review-report.md`)

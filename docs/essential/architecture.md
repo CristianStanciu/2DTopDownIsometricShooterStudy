@@ -67,6 +67,18 @@ Non-inheritance composition to know about:
 2. **Static facade**: `TadaInput` (input), `CameraShake` (shake), `CrosshairMouse.AimDirection`
    / `CrosshairJoystick.AimDirection` (aim vectors), `PauseController.isGamePaused`.
    These create hidden scene-level coupling — read before refactoring.
+   Lifecycle (P0.E4.T4): each facade ships a `ResetStaticState()` invoked by
+   `[RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]`, so
+   statics are wiped on every play start — even with domain reload disabled:
+
+   | Facade | Statics reset |
+   |---|---|
+   | `TadaInput` | `currentKeys*` arrays, axis + mouse vectors, `IsMouseActive` (P0.E3.T8) |
+   | `CameraShake` | `isActive`, `shakeDuration` |
+   | `PauseController` | `isGamePaused` |
+   | `CrosshairMouse` | `_AimDirection` |
+   | `CrosshairJoystick` | `_AimDirection`, `_CrosshairPosition` |
+   | `PlayerBodyPartsHandler` | `isRightDirection` |
 3. **Inspector-serialized arrays over dynamic lookup**: `WeaponHandler.weapons[]`,
    `SoundHandlerLocal.sounds[]`, `EnvironmentObjectTrigger.objects*[]`, `MusicHandler.musicClips[]`.
 4. **Base-class virtual hooks**: `Weapon.Awake/Update/OnCanUse/PrimaryAction/SecondaryAction`,

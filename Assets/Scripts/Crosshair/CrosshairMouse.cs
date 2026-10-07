@@ -49,4 +49,15 @@ public class CrosshairMouse : Crosshair
         _AimDirection = (crosshair.transform.position - player.position).normalized;
         _AimDirection.z = 0f;
     }
+    /// <summary>
+    /// Clears the static aim direction before each play session starts (and on app start) so a
+    /// stale direction can't be read before the first crosshair update with domain reload
+    /// disabled (P0.E4.T4, same lifecycle as TadaInput.ResetStaticState from P0.E3.T8).
+    /// </summary>
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetStaticState()
+    {
+        _AimDirection = Vector3.zero;
+    }
+
 }

@@ -54,4 +54,17 @@ public class PauseController : MonoBehaviour
         if (onGameResume != null)
             onGameResume.Invoke();
     }
+    /// <summary>
+    /// Restores the unpaused runtime state before each play session starts (and on app start):
+    /// a stale pause (timeScale 0 + AudioListener.pause) must not leak across sessions when
+    /// domain reload is disabled (P0.E4.T4, same lifecycle as TadaInput from P0.E3.T8).
+    /// </summary>
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetStaticState()
+    {
+        isGamePaused = false;
+        Time.timeScale = 1f;
+        AudioListener.pause = false;
+    }
+
 }

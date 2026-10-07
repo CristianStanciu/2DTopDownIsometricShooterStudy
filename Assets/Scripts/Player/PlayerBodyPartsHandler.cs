@@ -191,4 +191,16 @@ public class PlayerBodyPartsHandler : MonoBehaviour
             return;
         }
     }
+    /// <summary>
+    /// Restores the body-direction static before each play session starts (and on app start).
+    /// Awake() also starts with the right direction, but readers (e.g. Projectile) may observe the
+    /// static before Awake runs — and domain-reload-off sessions inherit stale values otherwise
+    /// (P0.E4.T4, same lifecycle as TadaInput.ResetStaticState from P0.E3.T8).
+    /// </summary>
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetStaticState()
+    {
+        isRightDirection = true;
+    }
+
 }
