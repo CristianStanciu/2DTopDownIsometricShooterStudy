@@ -33,12 +33,16 @@ public class CrosshairMouse : Crosshair
     protected override void Awake()
     {
         base.Awake();
-        player = FindAnyObjectByType<PlayerController>()?.transform;
+        player = SceneAnchors.Player;
     }
 
     public override void UpdateCrosshair()
     {
         base.UpdateCrosshair();
+
+        // P0.E4.T1: SceneAnchors registrations happen in other Awakes - resolve lazily until then.
+        if (player == null)
+            player = SceneAnchors.Player;
 
         // P0.E2.T3: player may be absent (defect P0.E3.T9) — tick without NRE.
         if (player == null)

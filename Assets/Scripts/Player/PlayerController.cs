@@ -126,6 +126,7 @@ public class PlayerController : MonoBehaviour
         TryGetComponent(out _WeaponHandler);
         TryGetComponent(out _PlayerPhysics);
         TryGetComponent(out _PlayerSkills);
+        SceneAnchors.RegisterPlayer(transform);
     }
 
     /// <summary>

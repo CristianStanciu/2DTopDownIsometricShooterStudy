@@ -52,13 +52,19 @@ public class CrosshairJoystick : Crosshair
     protected override void Awake()
     {
         base.Awake();
-        player = FindAnyObjectByType<PlayerController>()?.transform;
-        pointToFollow = FindAnyObjectByType<PlayerShoulderMain>()?.transform;
+        player = SceneAnchors.Player;
+        pointToFollow = SceneAnchors.MainShoulder;
     }
 
     public override void UpdateCrosshair()
     {
         base.UpdateCrosshair();
+
+        // P0.E4.T1: SceneAnchors registrations happen in other Awakes - resolve lazily until then.
+        if (pointToFollow == null)
+            pointToFollow = SceneAnchors.MainShoulder;
+        if (player == null)
+            player = SceneAnchors.Player;
 
         if (!isReady)
         {

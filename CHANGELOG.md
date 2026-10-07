@@ -46,6 +46,18 @@ Every merged PR adds an entry under `[Unreleased]` (rule: `CONTRIBUTING.md`).
 - `.editorconfig` (P0.E5.T1): survey-based C# conventions for all 48 scripts — no `var`,
   no `this.`, Allman braces, 4-space indent, UTF-8-BOM, naming suggestions, IDE0052
   suppression kept; CI formatter enforcement deferred with P0.E5.T2
+- Assembly definition layout (P0.E4.T1): 9 domain asmdefs (`Game.Core` default root assembly
+  + `Game.Player`/`Game.Weapons`/`Game.Audio`/`Game.Camera`/`Game.Environment`/`Game.UI`/
+  `Game.DebugTools`/`Game.EditorTools`) + `Tests.EditMode`/`Tests.PlayMode`; full cross-folder
+  edge audit (every class→folder reference enumerated), 2 cycle cuts shipped as new Core
+  statics (`SceneAnchors`, `FacingState`); verified in throwaway clone — import exit 0,
+  0 `error CS`/0 `warning CS`, 8 `Game.*.dll` + `Tests.EditMode.dll`, graph acyclic
+  (ADR-0001 amended as-built) — P0.E4.T1
+- EditMode test suite (P0.E7.T1): `TadaInputTests` ×13 (consumption, edge clearing, axis
+  press/hold/release, reset incl. axis memory, `NextUseRate` single down/up) +
+  `ArraysHandlerTests` ×11 (wrap/roundtrip/full-cycle/empty-range) = **24 tests, batch run
+  24/24 GREEN** in the fresh-clone verifier — satisfies the EditMode ≥10 exit criterion
+  locally; `GameFlowTests`/`TuningRegistryTests` deferred to P0.E4.T5/T6, CI run pending push
 
 ### Changed
 
@@ -101,6 +113,11 @@ Every merged PR adds an entry under `[Unreleased]` (rule: `CONTRIBUTING.md`).
   pause/shake/aim/body-direction state can't leak across plays, even with domain reload
   disabled; verified by a 5× enter/exit cycle run (GREEN PASS=50/FAIL=0 —
   `docs/qa/static-reset.md`) — P0.E4.T4
+- Cycle cuts for the asmdef split (P0.E4.T1): crosshair player lookups resolve through the
+  new `SceneAnchors` registry in `Game.Core` (lazy re-resolve keeps E3.T9 null-guards) instead
+  of `FindAnyObjectByType<PlayerController/PlayerShoulderMain>`; `Projectile` reads
+  `FacingState.IsRightDirection` (Core) instead of `PlayerBodyPartsHandler.isRightDirection`,
+  which now delegates to it — behavior identical, QA tripwires stay valid
 - Crosshair NRE when `PlayerController` absent (mouse + joystick lookups null-guarded) — P0.E2.T3
   (defect P0.E3.T9 code part)
 - 17 documentation defects from the QA review (details: `docs/review-report.md`)

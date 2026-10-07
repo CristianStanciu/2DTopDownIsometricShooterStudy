@@ -72,10 +72,10 @@ check run. Two gates fail the run independently:
 Unity.exe -batchmode -projectPath <repo> -runTests -testPlatform editmode -logFile - 
 ```
 
-> **Status:** test assemblies land with **P0.E7.T1** — until then the Test Runner opens
-> empty and the current verification is the manual smoke case
-> **`MT-SMOKE-01`** ([`docs/qa/smoke.md`](../qa/smoke.md); the automated subset runs
-> headless on a fresh clone).
+> **Status:** test assemblies shipped with **P0.E7.T1** — EditMode currently runs 24 tests
+> (`TadaInputTests`, `ArraysHandlerTests`); PlayMode smoke tests land with **P0.E7.T2**.
+> Gameplay verification meanwhile remains the manual smoke case **`MT-SMOKE-01`**
+> ([`docs/qa/smoke.md`](../qa/smoke.md); the automated subset runs headless on a fresh clone).
 
 ## 6. Before you push
 

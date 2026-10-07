@@ -45,17 +45,17 @@
 *Source: `docs/essential/known-issues-and-roadmap.md` §B. One task per defect + regression proof. (B.14 was appended to §B after it was found by P0.E2.T6 → task T15.)*
 
 - [~] **P0.E3.T1** — `WeaponHandler.CheckWeaponsAvailability()`: make guards actually protect callers (null-safe early abort + callers check result) so `weapons[i]`/`currentWeapon` can never NRE *(code done: returns bool, all 3 callers abort on false; batchmode compile 0 warn/0 error — `724250d`; test pending P0.E7)*
-  - [ ] EditMode test: handler with empty/destroyed weapon list doesn't throw; callers skip fire *(blocked on P0.E7 test asmdefs)*
+  - [ ] EditMode test: handler with empty/destroyed weapon list doesn't throw; callers skip fire *(unblocked — test asmdefs shipped with P0.E7.T1; fixture itself still open)*
 - [x] **P0.E3.T2** — `PlayerSkills.SetActiveTrails()`: null-check `dashTrails[i]`, not the array *(array guarded once before the loop; commit `9aaee2a`, compile-verified)*
 - [~] **P0.E3.T3** — `SoundManager.SFX_PlayOneShot/SFX_PlayDelayedOneShot`: guard on `sfx != null` (currently checks `music`) *(code done: guards the resolved emitter (`sfx`/`unstoppableSfx`); commit `cc51c5d`; test pending P0.E7)*
-  - [ ] Test: music-only SoundManager doesn't break SFX calls *(blocked on P0.E7 test asmdefs)*
+  - [ ] Test: music-only SoundManager doesn't break SFX calls *(unblocked — test asmdefs shipped with P0.E7.T1; fixture itself still open)*
 - [x] **P0.E3.T4** — `PlayerController`: replace direct `Input.GetKeyDown(KeyCode.Alpha1/Alpha2)` with `TadaInput` so slot switching works on gamepad and honours the abstraction *(new `ThisKey.WeaponSlot1/2` = `Alpha1/Alpha2` + `Joystick1Button2/3` (X/Y); `PlayerController` reads via `TadaInput.GetKeyDown`; overlay gamepad table + `getting-started.md` updated; gamepad check folds into MT-SMOKE-01)*
 - [~] **P0.E3.T5** — `Weapon_ShootProjectileCanCharge`: implement charge-shake cooldown (author NOTE); window configurable in tuning SO (P0.E4.T6) *(code done: `chargeReuseTimer` gates the charging start after `OnChargingEnd`; window = serialized `chargeReuseCooldown = 0.25s` per weapon; moves into the GameTuning SO when P0.E4.T6 lands)*
 - [x] **P0.E3.T6** — Remove dead class `Weapon_ChargeContinuousShooting` (empty `OnChargeShooting()`) or implement it; record decision *(decision: remove — zero scene/prefab/asset GUID refs; −191 lines; recorded in CHANGELOG + `weapons-and-projectiles.md`; commit `fdc6c90`)*
 - [~] **P0.E3.T7** — `PlayerPhysics.OnTriggerExit2D()`: restore wall façades on exit (mirror enter logic) *(code done: exit mirrors enter via `RestoreObjects()`/`RestoreStartSet()`; enter also null-guards `TryGetComponent`; commit `acf3aab`; test pending P0.E7)*
   - [ ] Test: enter → exit sequence restores sprite colors without requiring a second enter *(blocked on P0.E7 PlayMode infra; manual observation folds into P0.E2.T6 smoke)*
-- [~] **P0.E3.T8** — `TadaInput`: remove duplicated `StoreCurrentKeyUp(NextUseRate)` block; reset statics on play-stop; store `MouseAnyMovement`; EditMode tests for consumption + `NextUseRate` timing *(code done: duplicate `V` block removed; `ResetStaticState()` via `[RuntimeInitializeOnLoadMethod(SubsystemRegistration)]` clears all statics + key arrays each play start; `MouseAnyMovement` stored with axis semantics; tests pending P0.E7)*
-  - [ ] EditMode tests for consumption + `NextUseRate` timing *(blocked on P0.E7 test asmdefs)*
+- [x] **P0.E3.T8** — `TadaInput`: remove duplicated `StoreCurrentKeyUp(NextUseRate)` block; reset statics on play-stop; store `MouseAnyMovement`; EditMode tests for consumption + `NextUseRate` timing *(code done: duplicate `V` block removed; `ResetStaticState()` via `[RuntimeInitializeOnLoadMethod(SubsystemRegistration)]` clears all statics + key arrays each play start; `MouseAnyMovement` stored with axis semantics; tests shipped with P0.E7.T1 — 24/24 GREEN batch run)*
+  - [x] EditMode tests for consumption + `NextUseRate` timing *(shipped 2026-10-07: `TadaInputTests` — consumption + exactly one down/up per `NextUseRate` press (the duplicate-keyup regression); batch run 24/24 GREEN)*
 - [~] **P0.E3.T9** — Close crosshair NRE risk (same code as P0.E2.T3) *(code done in P0.E2.T3 — `?.transform` null-conditionals verified at `CrosshairMouse.cs:36` / `CrosshairJoystick.cs:55-56`; test pending P0.E7)*
   - [ ] Test: crosshair ticks without player in scene, logs warning instead of throwing *(blocked on P0.E7)*
 - [x] **P0.E3.T10** — `CameraBehaviour.FixedUpdate`: use `Time.fixedDeltaTime` for smoothing *(commit `e9f1ef2`)*
@@ -68,8 +68,9 @@
 
 ## Epic P0.E4 — Architecture refactor (~5 pw) — *unblocks P1/P2/P3*
 
-- [ ] **P0.E4.T1** — Introduce `.asmdef` set: `Game.Core` (utilities/global), `Game.Player`, `Game.Weapons`, `Game.Audio`, `Game.Camera`, `Game.Environment`, `Game.UI`, `Game.EditorTools`, `Tests.EditMode`, `Tests.PlayMode`; single assembly per folder family, no cycles
-  - [ ] CI compile green; total domain reload time measured before/after (expect improvement)
+- [x] **P0.E4.T1** — Introduce `.asmdef` set: `Game.Core` (utilities/global), `Game.Player`, `Game.Weapons`, `Game.Audio`, `Game.Camera`, `Game.Environment`, `Game.UI`, `Game.EditorTools`, `Tests.EditMode`, `Tests.PlayMode`; single assembly per folder family, no cycles
+  - [x] As-built (2026-10-07): 9 game + 2 test asmdefs — `Game.Core` is the default root assembly (no asmdef file under `Assets/Scripts/` root) covering `Animations/FX/Global Managers/Inputs/Physics/Utilities`; **added `Game.DebugTools`** (the `Debug` folder reads `CrosshairJoystick` statics, so Core would otherwise need a Core→UI edge). Two cycle cuts: crosshair player lookups → new `SceneAnchors` registry in Core (lazy re-resolve; E3.T9 null-guards intact); `Projectile` facing → new `FacingState` in Core (`PlayerBodyPartsHandler.isRightDirection` kept as a delegating facade so QA tripwires stay valid). Full cross-folder edge enumeration found no other cycles (`Animations→Weapons` was a false positive — `Animation` is a nested enum; `AnimationHandler` binds `UnityEngine.Animation`). Verified in a throwaway clone: batchmode import exit 0, 0 `error CS`/0 `warning CS`, 8 `Game.*.dll` + `Tests.EditMode.dll` built, graph acyclic
+  - [ ] CI compile green; total domain reload time measured before/after (expect improvement) *(local batchmode compile GREEN + tests 24/24 in clone; CI run pending push (`gh auth login`); reload-time measurement deferred to E5.T2)*
 - [ ] **P0.E4.T2** — Extract duplicated scene rig into shared prefabs: `PlayerRig`, `CameraRig`, `AudioRig`, `CrosshairRig` (both scenes carry identical copies — `docs/essential/scenes.md`); replace scene copies with prefab instances preserving all overrides
   - [ ] Instance override diff reviewed (no wiring lost); both scenes pass smoke
 - [ ] **P0.E4.T3** — Scene context bootstrap: `SceneContext` component holding explicit refs (player, camera, sound manager, crosshair, spawner); consumers get refs via context instead of startup `Find*` calls
@@ -92,7 +93,7 @@
 ## Epic P0.E6 — CI/CD pipeline (~2 pw)
 
 - [~] **P0.E6.T1** — GitHub Actions workflow `ci.yml` on PR→`develop`: checkout (+LFS), game-ci Unity activation (license secret), import, compile, EditMode tests → JUnit results artifact; fails on warnings (policy from P0.E2.T4)
-  - *Workflow written & YAML-validated 2026-10-06: checkout(LFS) → `game-ci/unity-test-runner@v4` pinned `6000.3.20f1` EditMode (license via `UNITY_LICENSE` secret; docker image `ubuntu-6000.3.20f1-*` confirmed on Docker Hub) → "Warning gate" step (E2.T4) → results artifact + check run. Pending: push + secret setup + first green run (blocked with `gh auth login`). Note: zero test assemblies until P0.E7.T1 — first run must confirm editmode-with-no-tests behaviour.*
+  - *Workflow written & YAML-validated 2026-10-06: checkout(LFS) → `game-ci/unity-test-runner@v4` pinned `6000.3.20f1` EditMode (license via `UNITY_LICENSE` secret; docker image `ubuntu-6000.3.20f1-*` confirmed on Docker Hub) → "Warning gate" step (E2.T4) → results artifact + check run. Pending: push + secret setup + first green run (blocked with `gh auth login`). Note: test assemblies shipped with P0.E7.T1 (`Tests.EditMode`, 24 tests) — first CI run confirms real EditMode coverage.*
 - [ ] **P0.E6.T2** — Nightly `nightly.yml`: PlayMode smoke (headless): load `Level_00`, simulate 5 s input, assert no exceptions; results emailed/Slack
 - [~] **P0.E6.T3** — `build.yml` (manual dispatch): Windows standalone build → zipped artifact named `{version}-{sha}`; later reused by P8/P9 for RC and depot uploads
   - *Workflow written & YAML/bash-validated 2026-10-06: `workflow_dispatch` (optional `version` override) → label `{bundleVersion}-{sha7}` read from `ProjectSettings.asset` → `game-ci/unity-builder@v4` `StandaloneWindows64` on `ubuntu-latest` (same license secrets as `ci.yml`; `buildName` = label; `Library` cache) → zip of `build/StandaloneWindows64/` → artifact `{version}-{sha}`. Pending: push + first manual run (blocked with `gh auth login`) incl. confirming builder log plumbing.*
@@ -100,7 +101,8 @@
 
 ## Epic P0.E7 — Test foundation (~2 pw)
 
-- [ ] **P0.E7.T1** — Test asmdefs (P0.E4.T1) + fixtures: `TadaInputTests` (consumption, rate limits, reset), `ArraysHandlerTests`, `GameFlowTests` (P0.E4.T5 matrix), `TuningRegistryTests`
+- [~] **P0.E7.T1** — Test asmdefs (P0.E4.T1) + fixtures: `TadaInputTests` (consumption, rate limits, reset), `ArraysHandlerTests`, `GameFlowTests` (P0.E4.T5 matrix), `TuningRegistryTests`
+  - *Shipped 2026-10-07: `Tests.EditMode` + `Tests.PlayMode` asmdefs; `TadaInputTests` ×13 (consumption, held/up edge clearing, axis press/hold/release, reset incl. axis press-memory, single `NextUseRate` down/up per press) + `ArraysHandlerTests` ×11 (wrap, roundtrip, full-cycle walks, empty-range contract) = **24/24 GREEN** (batch run, exit 0) in the throwaway-clone verifier — EditMode ≥10 exit criterion met locally. `GameFlowTests` blocked on P0.E4.T5 and `TuningRegistryTests` on P0.E4.T6 (classes don't exist yet) → partial close; CI run pending push (`gh auth login`).*
 - [ ] **P0.E7.T2** — PlayMode combat smoke: player spawns, fire spawns projectile, projectile despawns at bounds (uses existing prefabs)
 - [ ] **P0.E7.T3** — Coverage baseline report (Unity coverage or coverlet-style tooling); store report in CI artifact; policy: no phase may *reduce* critical-path coverage
 - [ ] **P0.E7.T4** — Test data conventions: synthetic save fixtures folder (v1 files for P2.E4 migrator tests)

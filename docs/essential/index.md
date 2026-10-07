@@ -12,7 +12,7 @@ codebase as it exists on the `develop` branch after the Unity 6.3 upgrade
 | Engine | Unity `6000.3.20f1` (upgraded from `2019.4.0f1`) |
 | Render pipeline | URP `17.3.0`, forward low-quality renderer (`Forward_Low_NoLights`) |
 | Input | Legacy Input Manager (custom `TadaInput` wrapper) |
-| Scripts | ~50 C# files, single default assembly (`Assembly-CSharp`, no `.asmdef`) |
+| Scripts | ~50 C# files across 11 `.asmdef`s (9 game + 2 test, acyclic — [ADR-0001](../adr/0001-assembly-definition-layout.md)) |
 | Scenes | `Assets/Scenes/Level_00.unity` (main, in build), `Assets/Scenes/SingleWall_Test.unity` (test, not in build) |
 | License | MIT (code + project setup only — see [Project Overview](project-overview.md#license-and-credits)) |
 

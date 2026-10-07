@@ -34,7 +34,11 @@ public class PlayerBodyPartsHandler : MonoBehaviour
 
     // To grant access to other classes if the need to know the current direction 
     // of the body (e.g. Projectile class to set travel direction)
-    public static bool isRightDirection;
+    public static bool isRightDirection
+    {
+        get { return FacingState.IsRightDirection; }
+        set { FacingState.IsRightDirection = value; }
+    }
 
     private bool isHandAndHeadOnFront;
     private bool isLookAtMouse;

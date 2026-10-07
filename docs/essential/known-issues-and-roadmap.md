@@ -46,7 +46,8 @@ status, (B) verified defects & tech debt with file references, (C) capability ga
 3. **README is stale**: still says "made with Unity 2019.4.0f1" and v0.2 while
    `bundleVersion` is 0.1 and the editor is 6000.3.20f1.
 4. **No play-mode validation was recorded** — the upgrade commit contains no evidence of a test run
-   (no tests exist in the project at all). *Partially resolved 2026-10-06: MT-SMOKE-01 automated
+   (no tests existed at survey time; the EditMode suite landed later with P0.E7.T1). *Partially
+   resolved 2026-10-06: MT-SMOKE-01 automated
    subset GREEN on a fresh clone (`docs/qa/smoke.md`); manual gamepad/audio pass still pending.*
 5. First open with any other 6.x patch will re-serialize again — recommend pinning 6000.3.20f1
    for the team.
@@ -91,9 +92,12 @@ status, (B) verified defects & tech debt with file references, (C) capability ga
   ~~no reset lifecycle~~ **reset lifecycle added (P0.E3.T8 + P0.E4.T4)**: every facade clears its
   statics on subsystem registration (5× enter/exit verified — `docs/qa/static-reset.md`);
   remaining debt: the coupling itself, hard to unit-test without injection.
-- **No assembly definitions** — everything recompiles in one assembly; slow iteration as the
-  project grows; no way to isolate editor/test code.
-- **No tests** despite `com.unity.test-framework 1.6.0` in the manifest.
+- **~~No assembly definitions~~ — resolved (P0.E4.T1)**: 9 domain asmdefs + 2 test asmdefs,
+  acyclic graph with two cycle cuts via Core registries (`SceneAnchors`, `FacingState`);
+  as-built table in [ADR-0001](../adr/0001-assembly-definition-layout.md).
+- **~~No tests~~ — resolved (P0.E7.T1, partial)**: 24 EditMode tests in `Tests.EditMode`
+  (`TadaInputTests` ×13, `ArraysHandlerTests` ×11, batch run 24/24 GREEN); `GameFlowTests`
+  and `TuningRegistryTests` deferred with P0.E4.T5/T6.
 - **~~`UserSettings/` + generated IDE files committed~~ — resolved (P0.E1.T1)**: untracked via
   `git rm --cached` and `.gitignore` hardened (`UserSettings/`, `*.slnx`, `Logs/`, …); IDE
   `.sln`/`.csproj` files are git-ignored and regenerate on open.

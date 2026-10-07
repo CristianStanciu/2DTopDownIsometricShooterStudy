@@ -2,12 +2,22 @@
 
 [Index](index.md) · [Getting Started](getting-started.md) · [Player System](player.md)
 
-## Assembly & compilation
+## Assembly & compilation (P0.E4.T1)
 
-- **No `.asmdef` files** — everything in `Assets/Scripts/` compiles into the default
-  `Assembly-CSharp` assembly (also referenced by the generated `Assembly-CSharp.csproj` /
-  `my-game.sln` / `my-game.slnx`). There are **no tests** despite `com.unity.test-framework`
-  being installed.
+- **11 `.asmdef` files** split the code into acyclic domain assemblies (layout + rationale:
+  [ADR-0001](../adr/0001-assembly-definition-layout.md)): `Game.Core` is the default root
+  assembly covering `Animations/`, `FX/`, `Global Managers and Controllers/`, `Inputs/`,
+  `Physics/`, `Utilities/`; `Player/`, `Weapons/`, `Audio/`, `Camera/`, `Environment/`,
+  `Crosshair/` (→ `Game.UI`), `Debug/` (→ `Game.DebugTools`) each own an asmdef;
+  `Assets/Editor/` → `Game.EditorTools` (Editor-only, empty until P0.E5.T4).
+- **Test assemblies:** `Tests/EditMode/` (`Tests.EditMode`, Editor-only) and
+  `Tests/PlayMode/` reference `Game.Core` + the Unity test runners — 24 EditMode tests
+  currently ship (`TadaInputTests`, `ArraysHandlerTests`; P0.E7.T1).
+- **No cycles** — two cross-folder static reads were cut through Core registries
+  (`SceneAnchors` for player transforms, `FacingState` for body direction); the full
+  edge enumeration lives in the ADR's as-built table.
+- Scripts outside these folders would compile into the default `Assembly-CSharp`
+  (currently empty).
 
 ## Script folder map (`Assets/Scripts/`)
 
@@ -20,7 +30,7 @@
 | `Debug/` | `GUIHandler`, `GizmosHandler` | OnGUI overlay (controls + aim vectors) and gizmo toggles. |
 | `Environment/` | `EnvironmentObject`, `EnvironmentObjectTrigger` | Wall façade swapping by player position — see [Environment, FX & Pause](environment-and-fx.md). |
 | `FX/AfterImage/` | 5 classes | Dash after-image pool system. |
-| `Global Managers and Controllers/` | `PauseController` | Pause/resume via `Time.timeScale`, `AudioListener.pause`, `UnityEvent`s. |
+| `Global Managers and Controllers/` | `PauseController`, `SceneAnchors`, `FacingState` | Pause/resume via `Time.timeScale`, `AudioListener.pause`, `UnityEvent`s; Core-side scene/facing registries added as asmdef cycle cuts (P0.E4.T1). |
 | `Inputs/` | `TadaInput` | Static input manager wrapping legacy `UnityEngine.Input` — see [Input System](input.md). |
 | `Physics/` | `Physics2DHandler` | Rigidbody2D base class (`SetVelocity`, `AddForce`, `CanMove`). |
 | `Player/` | 9 classes | Player composition — see [Player System](player.md). |

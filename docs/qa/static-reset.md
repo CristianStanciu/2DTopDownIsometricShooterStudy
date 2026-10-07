@@ -61,6 +61,15 @@ editor-internal `UnityEditor.Search` exception (counted `WARN`).
 - After the run the clone's `ProjectSettings/` was restored via scoped
   `git checkout -- ProjectSettings` → `git status` clean (clone hygiene).
 
+## Follow-up — P0.E4.T1 (2026-10-07)
+
+The asmdef split added two Core statics with the same
+`[RuntimeInitializeOnLoadMethod(SubsystemRegistration)]` lifecycle: `SceneAnchors`
+(`Player` / `MainShoulder` transforms → `null`) and `FacingState` (`IsRightDirection` → `true`).
+`PlayerBodyPartsHandler.isRightDirection` is now a delegating property over `FacingState`,
+so the `isRightDirection` row above keeps passing unchanged — the tripwire guards the same
+user-visible state through the facade.
+
 ## Run log (verbatim)
 
 ```text

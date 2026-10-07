@@ -83,7 +83,7 @@ public class Projectile : MonoBehaviour
         _Sfx.PlaySound(0);
 
         // Set travel direction based on the current direction of the body
-        if (!PlayerBodyPartsHandler.isRightDirection)
+        if (!FacingState.IsRightDirection)
             travelDirection = -Vector3.right;
         else
             travelDirection = Vector3.right;

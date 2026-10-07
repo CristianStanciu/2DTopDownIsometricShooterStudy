@@ -50,7 +50,7 @@ jobs:
           artifactsPath: editmode-results
           githubToken: ${{ secrets.GITHUB_TOKEN }}
           checkName: EditMode test results
-          coverageEnabled: false # re-enabled with P0.E7.T3 (no test assemblies yet)
+          coverageEnabled: false # re-enabled with P0.E7.T3 (test assemblies shipped with P0.E7.T1)
           customParameters: -nographics -logFile unity-editor.log
 
       # P0.E2.T4 warning-zero policy — fail on any compiler diagnostic line.
