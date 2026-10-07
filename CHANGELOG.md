@@ -56,6 +56,12 @@ Every merged PR adds an entry under `[Unreleased]` (rule: `CONTRIBUTING.md`).
   researched budgets (CC0 libraries $0–50 / commission ≈ $500–1,200 incl. commercial-use
   uplift / hybrid ≈ $350–800); IP-assignment requirements (17 U.S.C. §204(a) → E8.T5 receipts),
   acceptance checklist and pre-P9 schedule
+- `THIRD-PARTY.md` (P0.E8.T4): root notices file generated from the asset ledger — required
+  CC attributions (in-game credits source), third-party code (CameraShake / UnitySingleton /
+  sampleREADME), non-commercial assets pending replacement, Unity Companion License note for
+  all 64 `com.unity.*` packages, license-text links. LICENSE scope confirmed code-only per
+  upstream README (recorded; `LICENSE` untouched); P3 credits requirement verified as already
+  present (P3.E3.T1 + P3.E3.T7 reference `THIRD-PARTY.md`)
 - `.editorconfig` (P0.E5.T1): survey-based C# conventions for all 48 scripts — no `var`,
   no `this.`, Allman braces, 4-space indent, UTF-8-BOM, naming suggestions, IDE0052
   suppression kept; CI formatter enforcement deferred with P0.E5.T2
