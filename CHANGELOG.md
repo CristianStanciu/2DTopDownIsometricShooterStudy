@@ -50,6 +50,12 @@ Every merged PR adds an entry under `[Unreleased]` (rule: `CONTRIBUTING.md`).
   (`-Check` path/GUID drift gate) wired as CI job `asset-ledger`. **Findings: the NC music
   and all pixel art (upstream: "free for personal use") are commercial blockers — feeds
   E8.T2 brief scope (music + sprites) and P8.E3.T4 remediation**
+- Replacement brief for the non-commercial blockers (P0.E8.T2): `docs/legal/replacement-brief.md`
+  — music replacement spec (style/length/stems, drop-in for `MusicHandler`) + 9-sheet sprite
+  spec (measured dimensions/PPU, Color/Glow and animation contracts); 3 sourcing routes with
+  researched budgets (CC0 libraries $0–50 / commission ≈ $500–1,200 incl. commercial-use
+  uplift / hybrid ≈ $350–800); IP-assignment requirements (17 U.S.C. §204(a) → E8.T5 receipts),
+  acceptance checklist and pre-P9 schedule
 - `.editorconfig` (P0.E5.T1): survey-based C# conventions for all 48 scripts — no `var`,
   no `this.`, Allman braces, 4-space indent, UTF-8-BOM, naming suggestions, IDE0052
   suppression kept; CI formatter enforcement deferred with P0.E5.T2
